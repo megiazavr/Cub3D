@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 14:50:15 by megi             ###   ########.fr       */
+/*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
+/*   Updated: 2026/08/24 14:40:37 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/cub3D.h"
+#include "../../headers/cub3D.h"
 
-int main(int ac, char **av) {
-    char *file;
-    t_map map;
-    
-    if (ac <= 1) {
-        write(2, "Give me arguments!\n", 19);
-        return (0);
-    }
-    file = av[1];
-    parseconfig(&map, file);
-    return (0);
+int empty_flag(char *l)
+{
+	int	i;
+	int	empty_l;
+
+	i = 0;
+	empty_l = 1;
+	while (l[i])
+	{
+		if (l[i] != ' ' && l[i] != '\t' && l[i] != '\n' && l[i] != '\r')
+			empty_l = 0;
+		i++;
+	}
+	if (i > 0 && l[i - 1] == '\n')
+		l[i - 1] = '\0';
+	return (empty_l);
 }

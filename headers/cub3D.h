@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/08/21 23:12:46 by megi             ###   ########.fr       */
+/*   Updated: 2026/08/24 14:50:04 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ typedef struct s_map {
     int     rgb_av[6];
 }   t_map;
 
-int readthemap(t_map *map, char *file);
+int parseconfig(t_map *map, char *file);
 t_results valid_identifier(t_map *map, char *str);
 t_results valid_color(t_map *map, char *str);
-int errors(int error_type);
+int texture_errors(int error_type);
+int empty_flag(char *l);
 
 #endif
