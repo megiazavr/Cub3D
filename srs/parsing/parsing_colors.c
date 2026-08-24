@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:38:25 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 14:45:12 by megi             ###   ########.fr       */
+/*   Updated: 2026/08/24 18:28:05 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ static t_results parse_f(t_map *map, char **rgb)
 
 t_results valid_color(t_map *map, char *str)
 {
-    char **identifier = ft_split(str, ' ');
     char **rgb;
-
-    if (identifier[0] == NULL || identifier[1] == NULL)
+    
+    map->identifier= ft_split(str, ' ');
+    if (map->identifier[0] == NULL || map->identifier[1] == NULL)
         return (texture_errors(ERR_IDENTIFIER), ERROR);
-    rgb = ft_split(identifier[1], ',');
-    if (ft_strcmp(identifier[0], "C") == 0)
+    rgb = ft_split(map->identifier[1], ',');
+    if (ft_strcmp(map->identifier[0], "C") == 0)
         return (parse_c(map, rgb));
-    else if (ft_strcmp(identifier[0], "F") == 0)
+    else if (ft_strcmp(map->identifier[0], "F") == 0)
         return (parse_f(map, rgb));
     return (texture_errors(ERR_IDENTIFIER), ERROR);
 }

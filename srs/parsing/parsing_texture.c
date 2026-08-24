@@ -13,28 +13,27 @@
 #include "../../headers/cub3D.h"
 
 t_results valid_identifier(t_map *map, char *str) {
-    char **identifier = ft_split(str, ' ');
-
-	if (identifier[0] == NULL)
+    map->identifier = ft_split(str, ' ');
+	if (map->identifier[0] == NULL)
 		return (texture_errors(ERR_IDENTIFIER), ERROR);
-	if (ft_strcmp(identifier[0], "C") == 0 || ft_strcmp(identifier[0], "F") == 0)
+	if (ft_strcmp(map->identifier[0], "C") == 0 || ft_strcmp(map->identifier[0], "F") == 0)
 		return (COLOR);
-	if (identifier[1] == NULL)
+	if (map->identifier[1] == NULL)
 		return (texture_errors(ERR_IDENTIFIER), ERROR);
-	if (ft_strcmp(identifier[0], "NO") == 0) {
-		map->path[NO] = identifier[1];
+	if (ft_strcmp(map->identifier[0], "NO") == 0) {
+		map->path[NO] = map->identifier[1];
 		return (TEXTURE);
 	}
-	else if (ft_strcmp(identifier[0], "SO") == 0) {
-		map->path[SO] = identifier[1];
+	else if (ft_strcmp(map->identifier[0], "SO") == 0) {
+		map->path[SO] = map->identifier[1];
 		return (TEXTURE);
 	}
-	else if (ft_strcmp(identifier[0], "WE") == 0) {
-		map->path[WE] = identifier[1];
+	else if (ft_strcmp(map->identifier[0], "WE") == 0) {
+		map->path[WE] = map->identifier[1];
 		return (TEXTURE);
 	}
-	else if (ft_strcmp(identifier[0], "EA") == 0) {
-		map->path[EA] = identifier[1];
+	else if (ft_strcmp(map->identifier[0], "EA") == 0) {
+		map->path[EA] = map->identifier[1];
 		return (TEXTURE);
 	}
     return (texture_errors(ERR_IDENTIFIER), ERROR);
