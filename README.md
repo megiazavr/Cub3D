@@ -85,4 +85,4 @@ The simulation log filename can also be defined in `Makefile` under `SIM_LOG`.
 
 ### AI Usage
 
-AI (LLMs) was used as a study and research support, to find more information on the various concepts I needed to learn and to assist in interpretation of technical texts.
+AI (LLMs) was used as a study and research support, to find more information on the various concepts we needed to learn and to assist in interpretation of technical texts.
