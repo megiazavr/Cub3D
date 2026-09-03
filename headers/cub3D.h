@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 21:27:46 by megi             ###   ########.fr       */
+/*   Updated: 2026/09/03 18:27:59 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include "../library/libft/libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include "../libs/libft/libft.h"
 
 typedef enum e_monitor {
     CONFIG,

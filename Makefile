@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/09/02 20:36:10 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/09/03 18:32:04 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,19 +26,19 @@ OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
 HEADERS 	= $(addprefix headers/, cub3D.h)
 
-LIBFT_DIR	= ./library/libft
-LIBFT		= $(LIBFT_DIR)/libft.a
+LIBS_DIR	= ./libs
+LIBFT		= $(LIBS_DIR)/libft/libft.a
 
 CC			= cc
 CPPFLAGS	= -Iheaders
 CFLAGS		= -Wall -Wextra -Werror
-LDFLAGS		= -L$(LIBFT_DIR)
+LDFLAGS		= -L$(LIBS_DIR)/libft
 LDLIBS		= -lft
 DB_FLAGS	= -g
 
 RM 			= rm -f
 
-ARGS			= f.cub
+ARGS			= maps/f.cub
 
 TEST_DIR		= test_logs
 SIM_LOG			= sim_log
@@ -73,7 +73,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	@printf "%b compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBS_DIR)/libft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
@@ -83,12 +83,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 clean:
 	@$(RM) $(OBJ)
 	@$(RM) -r $(OBJ_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LIBS_DIR)/libft clean
 	@printf "$(INFO)All object files removed.$(COLOR_RESET)\n"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make -C $(LIBFT_DIR) fclean
+	@make -C $(LIBS_DIR)/libft fclean
 	@printf "$(INFO)Executable removed.$(COLOR_RESET)\n"
 
 re: fclean all
@@ -98,8 +98,8 @@ run: re $(NAME)
 	@./$(NAME) $(ARGS)
 
 norm:
-	@curl -L -o "../en.norm.pdf" \
-	"https://raw.githubusercontent.com/neusamcn/philo/main/en.norm.pdf"
+	@curl -L -o "en.norm.pdf" \
+	"https://raw.githubusercontent.com/42school/norminette/master/pdf/en.norm.pdf"
 
 
 #################################### RULES FOR TESTING ####################################
