@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 21:34:59 by megi             ###   ########.fr       */
+/*   Updated: 2026/09/03 18:51:32 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ int readthemap(t_map *map, char *l) {
 			space = 0;
 			map->one_player_per_map += 1;
 			if (map->one_player_per_map == 1)
-			map->player = l[j];
+				map->player = l[j];
 			if (map->one_player_per_map > 1 || map->one_player_per_map < 1)
-			map_errors(ERR_PLAYER);
+				map_errors(ERR_PLAYER);
 			j++;
 		}
 		if (map->one_player_per_map == 0) {

@@ -55,17 +55,25 @@ The simulation log filename can also be defined in `Makefile` under `SIM_LOG`.
 
 ## Resources
 
-### Allowed functions
-- [open](LINK)
-- [printf](https://man7.org/linux/man-pages/man3/printf.3.html)
-- [malloc, free](https://man7.org/linux/man-pages/man3/malloc.3.html)
-- [write](https://man7.org/linux/man-pages/man2/write.2.html)
-- [close](LINK)
-- [gettimeofday](https://man7.org/linux/man-pages/man3/gettimeofday.3p.html)
-- [read](LINK)
-- [perror](LINK)
-- [strerror](LINK)
-- [exir](LINK)
+### Allowed functions and their libraries
+- fcntl.h
+	- [open](https://man7.org/linux/man-pages/man2/open.2.html)
+- All functions of [math.h](https://man7.org/linux/man-pages/man0/math.h.0p.html)
+- All functions of [mlx.h](https://github.com/42paris/minilibx-linux)
+- stdio.h
+	- [printf](https://man7.org/linux/man-pages/man3/printf.3.html)
+- stdlib.h
+	- [exit](https://man7.org/linux/man-pages/man3/exit.3.html)
+	- [malloc, free](https://man7.org/linux/man-pages/man3/malloc.3.html)
+	- [perror](https://man7.org/linux/man-pages/man3/perror.3.html)
+- string.h
+	- [strerror](https://man7.org/linux/man-pages/man3/strerror.3.html)
+- sys/time.h
+	- [gettimeofday](https://man7.org/linux/man-pages/man3/gettimeofday.3p.html)
+- unistd.h
+	- [close](https://man7.org/linux/man-pages/man2/close.2.html)
+	- [read](https://man7.org/linux/man-pages/man2/read.2.html)
+	- [write](https://man7.org/linux/man-pages/man2/write.2.html)
 
 
 ### Important concepts

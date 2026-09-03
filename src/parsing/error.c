@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 21:35:09 by megi             ###   ########.fr       */
+/*   Updated: 2026/09/03 19:01:34 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int texture_errors(int error_type)
     if (error_type == ERR_IDENTIFIER)
     {
         write(2, "Error\n", 6);
-        write(2, "Use one of this identifiers: NO, SO, WE, EA with path && F, C", 49);
+        write(2, "Use one of these identifiers: NO, SO, WE, EA with path && F, C", 50);
         return (0);
     }
     else if (error_type == ERR_RGB_AV)
@@ -32,6 +32,7 @@ int texture_errors(int error_type)
         write(2, "RGB args should be inside [0, 255] diaposon!\n", 45);
         return (0);
     }
+	// TODO: final else statement is missing
     return (0);
 }
 
