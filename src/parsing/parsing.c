@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/09/03 18:51:32 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/17 20:31:24 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ int parseconfig(t_map *map, char *line) {
 }
 
 //TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
-t_monitor monitor(t_map *map, char *file) {
-	char		*line;
-	int 		fd;
-	int			in_map;
+t_monitor monitor(t_map *map, char *file)
+{
+	char	*line;
+	int 	fd;
+	int		in_map;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (perror("OOPS "), 0);
+		return (perror("opening .cub file failed"), EXIT_FAILURE);
 	map->one_player_per_map = 0;
 	//in_map = 0;
 	line = get_next_line(fd);

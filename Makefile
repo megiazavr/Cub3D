@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/09/03 18:32:04 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/09/17 20:31:36 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ DB_FLAGS	= -g
 
 RM 			= rm -f
 
-ARGS			= maps/f.cub
+ARG			= "  maps/f.cub   "
 
 TEST_DIR		= test_logs
 SIM_LOG			= sim_log
@@ -94,8 +94,8 @@ fclean: clean
 re: fclean all
 
 run: re $(NAME)
-	@printf "Running $(VIOLET)./$(NAME) $(ARGS)$(COLOR_RESET)\n\n"
-	@./$(NAME) $(ARGS)
+	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET)\n\n"
+	@./$(NAME) $(ARG)
 
 norm:
 	@curl -L -o "en.norm.pdf" \
@@ -117,28 +117,28 @@ $(TEST_DIR):
 	@printf "%b created.\n" "$(SUCCESS)/$@$(COLOR_RESET)"
 
 print: re $(NAME) $(TEST_DIR)
-	@printf "Running $(VIOLET)./$(NAME) $(ARGS)$(COLOR_RESET)\n\n"
-	@./$(NAME) $(ARGS) > $(TEST_DIR)/$(SIM_LOG).txt
+	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET)\n\n"
+	@./$(NAME) $(ARG) > $(TEST_DIR)/$(SIM_LOG).txt
 	@printf "See simulation logs in $(PATH_COLOR)$(TEST_DIR)/$(SIM_LOG).txt$(COLOR_RESET).\n"
 
 stderr: re $(NAME) $(TEST_DIR)
-	@printf "Running $(VIOLET)./$(NAME) $(ARGS)$(COLOR_RESET) to check for errors.\n\n"
-	@./$(NAME) $(ARGS) 2> $(TEST_DIR)/$(STDERR_LOG).txt
+	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET) to check for errors.\n\n"
+	@./$(NAME) $(ARG) 2> $(TEST_DIR)/$(STDERR_LOG).txt
 	@printf "\nRun concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(STDERR_LOG).txt$(COLOR_RESET).\n"
 
 db:
-	@gdbtui --args ./$(NAME_DB) $(ARGS)
+	@gdbtui --args ./$(NAME_DB) $(ARG)
 
 valg: $(NAME_DB) $(TEST_DIR)
 	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s \
-	--log-file=$(TEST_DIR)/$(VALG_LOG).log ./$(NAME_DB) $(ARGS)
+	--log-file=$(TEST_DIR)/$(VALG_LOG).log ./$(NAME_DB) $(ARG)
 	@printf "\nValgrind run concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(VALG_LOG).log$(COLOR_RESET).\n"
 
 hel: $(NAME_DB) $(TEST_DIR)
 	@valgrind --tool=helgrind --track-destroy=all -s --log-file=$(TEST_DIR)/$(HELG_LOG).log \
-	./$(NAME_DB) $(ARGS)
+	./$(NAME_DB) $(ARG)
 	@printf "\nHelgrind run concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(HELG_LOG).log$(COLOR_RESET).\n"
 
