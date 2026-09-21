@@ -6,13 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/09/21 21:37:41 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/21 22:38:44 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
-
-//readthemeap is splitting and getting 1 massive of [identifier and the path
 
 //TODO:SHOULD I ALSO DO T_RESULTS AND RETURN RESULT AS A COLOR OR MAP ETC
 int parseconfig(t_map *map, char *line) {
@@ -74,7 +72,7 @@ static void	monitor_loop(t_map *map, int fd, int in_map)
 //TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
 t_monitor monitor(t_map *map, char *file)
 {
-	// char	*line;
+	// char	*line; // TODO: delete if norm adjustments are good
 	int 	fd;
 	int		in_map;
 
@@ -84,6 +82,7 @@ t_monitor monitor(t_map *map, char *file)
 	map->one_player_per_map = 0;
 	//in_map = 0;
 	monitor_loop(map, fd, in_map);
+	// TODO: delete commented code below if norm adjustments are good
 	// line = get_next_line(fd);
 	// while (line != NULL)
 	// {

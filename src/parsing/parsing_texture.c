@@ -3,38 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 14:45:27 by megi             ###   ########.fr       */
+/*   Updated: 2026/09/21 22:53:54 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-t_results valid_identifier(t_map *map, char *str) {
-    map->identifier = ft_split(str, ' ');
-	if (map->identifier[0] == NULL)
-		return (texture_errors(ERR_IDENTIFIER), ERROR);
-	if (ft_strcmp(map->identifier[0], "C") == 0 || ft_strcmp(map->identifier[0], "F") == 0)
-		return (COLOR);
-	if (map->identifier[1] == NULL)
-		return (texture_errors(ERR_IDENTIFIER), ERROR);
-	if (ft_strcmp(map->identifier[0], "NO") == 0) {
+static t_results	valid_cardinal_pts(t_map *map)
+{
+	if (ft_strcmp(map->identifier[0], "NO") == 0)
+	{
 		map->path[NO] = map->identifier[1];
 		return (TEXTURE);
 	}
-	else if (ft_strcmp(map->identifier[0], "SO") == 0) {
+	else if (ft_strcmp(map->identifier[0], "SO") == 0)
+	{
 		map->path[SO] = map->identifier[1];
 		return (TEXTURE);
 	}
-	else if (ft_strcmp(map->identifier[0], "WE") == 0) {
+	else if (ft_strcmp(map->identifier[0], "WE") == 0)
+	{
 		map->path[WE] = map->identifier[1];
 		return (TEXTURE);
 	}
-	else if (ft_strcmp(map->identifier[0], "EA") == 0) {
+	else if (ft_strcmp(map->identifier[0], "EA") == 0)
+	{
 		map->path[EA] = map->identifier[1];
 		return (TEXTURE);
 	}
-    return (texture_errors(ERR_IDENTIFIER), ERROR);
+	return (texture_errors(ERR_IDENTIFIER), ERROR);
+}
+
+t_results	valid_identifier(t_map *map, char *str)
+{
+	map->identifier = ft_split(str, ' ');
+	if (map->identifier[0] == NULL)
+		return (texture_errors(ERR_IDENTIFIER), ERROR);
+	if (ft_strcmp(map->identifier[0], "C") == 0
+		|| ft_strcmp(map->identifier[0], "F") == 0)
+		return (COLOR);
+	if (map->identifier[1] == NULL)
+		return (texture_errors(ERR_IDENTIFIER), ERROR);
+	return (valid_cardinal_pts(map));
+	// TODO: delete commented code below if norm adjustments are good
+	// if (ft_strcmp(map->identifier[0], "NO") == 0)
+	// {
+	// 	map->path[NO] = map->identifier[1];
+	// 	return (TEXTURE);
+	// }
+	// else if (ft_strcmp(map->identifier[0], "SO") == 0)
+	// {
+	// 	map->path[SO] = map->identifier[1];
+	// 	return (TEXTURE);
+	// }
+	// else if (ft_strcmp(map->identifier[0], "WE") == 0)
+	// {
+	// 	map->path[WE] = map->identifier[1];
+	// 	return (TEXTURE);
+	// }
+	// else if (ft_strcmp(map->identifier[0], "EA") == 0)
+	// {
+	// 	map->path[EA] = map->identifier[1];
+	// 	return (TEXTURE);
+	// }
+	// return (texture_errors(ERR_IDENTIFIER), ERROR);
 }
