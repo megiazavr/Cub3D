@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/09/17 20:31:24 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/21 21:37:41 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,26 @@ int parseconfig(t_map *map, char *line) {
 	return (0);
 }
 
-//TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
-t_monitor monitor(t_map *map, char *file)
+static int	validate_map_identifiers(t_map *map, char *line)
+{
+	map->identifier = ft_split(line, ' ');
+	if (map->identifier[0])
+	{
+		if (ft_strcmp(map->identifier[0], "NO") == 0
+			|| ft_strcmp(map->identifier[0], "SO") == 0
+			|| ft_strcmp(map->identifier[0], "WE") == 0
+			|| ft_strcmp(map->identifier[0], "EA") == 0
+			|| ft_strcmp(map->identifier[0], "F") == 0
+			|| ft_strcmp(map->identifier[0], "C") == 0)
+			return (0);
+	}
+	return (1);
+}
+
+static void	monitor_loop(t_map *map, int fd, int in_map)
 {
 	char	*line;
-	int 	fd;
-	int		in_map;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (perror("opening .cub file failed"), EXIT_FAILURE);
-	map->one_player_per_map = 0;
-	//in_map = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -46,13 +54,7 @@ t_monitor monitor(t_map *map, char *file)
 			line = get_next_line(fd);
 			continue ;
 		}
-		map->identifier= ft_split(line, ' ');
-		if (map->identifier[0] && (ft_strcmp(map->identifier[0], "NO") == 0
-			|| ft_strcmp(map->identifier[0], "SO") == 0
-			|| ft_strcmp(map->identifier[0], "WE") == 0
-			|| ft_strcmp(map->identifier[0], "EA") == 0
-			|| ft_strcmp(map->identifier[0], "F") == 0
-			|| ft_strcmp(map->identifier[0], "C") == 0))
+		if (validate_map_identifiers(map, line) == 0)
 			parseconfig(map, line);
 		if (in_map == 1)
 		{
@@ -67,44 +69,49 @@ t_monitor monitor(t_map *map, char *file)
 		}
 		line = get_next_line(fd);
 	}
-	return (MAP);
 }
 
-//TODO: CHECK IF I CAN D I++ ONCE
-int readthemap(t_map *map, char *l) {
-	int	j;
-	int space;
+//TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
+t_monitor monitor(t_map *map, char *file)
+{
+	// char	*line;
+	int 	fd;
+	int		in_map;
 
-	(void)map;
-	j = -1;
-	space = 0;
-	while (l[j])
-	{
-		if (l[j] == '0' || l[j] == '1')
-			j++;
-		else if (l[j] == ' ') {
-			space += 1;
-			if (space > 2)
-				return (map_errors(ERR_MAP_SPACE), ERROR);
-			j++;
-		}			
-		else if (l[j] == 'N' || l[j] == 'S' || l[j] == 'W' || l[j] == 'E') {
-			space = 0;
-			map->one_player_per_map += 1;
-			if (map->one_player_per_map == 1)
-				map->player = l[j];
-			if (map->one_player_per_map > 1 || map->one_player_per_map < 1)
-				map_errors(ERR_PLAYER);
-			j++;
-		}
-		if (map->one_player_per_map == 0) {
-					
-			map_errors(ERR_PLAYER);
-		}
-		else {
-			map_errors(ERR_PLAYER);
-			j++;
-		}
-	}
-	return (map->one_player_per_map);
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (perror("Opening .cub file failed"), EXIT_FAILURE);
+	map->one_player_per_map = 0;
+	//in_map = 0;
+	monitor_loop(map, fd, in_map);
+	// line = get_next_line(fd);
+	// while (line != NULL)
+	// {
+	// 	if (empty_flag(line))
+	// 	{
+	// 		line = get_next_line(fd);
+	// 		continue ;
+	// 	}
+	// 	map->identifier = ft_split(line, ' ');
+	// 	if (map->identifier[0] && (ft_strcmp(map->identifier[0], "NO") == 0
+	// 		|| ft_strcmp(map->identifier[0], "SO") == 0
+	// 		|| ft_strcmp(map->identifier[0], "WE") == 0
+	// 		|| ft_strcmp(map->identifier[0], "EA") == 0
+	// 		|| ft_strcmp(map->identifier[0], "F") == 0
+	// 		|| ft_strcmp(map->identifier[0], "C") == 0))
+	// 		parseconfig(map, line);
+	// 	if (in_map == 1)
+	// 	{
+	// 		map->one_player_per_map = readthemap(map, line);
+	// 		line = get_next_line(fd);
+	// 		continue ;
+	// 	}
+	// 	else
+	// 	{
+	// 		in_map = 1;
+	// 		map->one_player_per_map = readthemap(map, line);
+	// 	}
+	// 	line = get_next_line(fd);
+	// }
+	return (MAP);
 }

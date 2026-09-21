@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/09/17 20:31:36 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/09/21 21:41:01 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ_DIR 	= obj
 OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
-				parsing_colors.c parsing_helper.c error.c)
+				parsing_colors.c parsing_helper.c error.c read_map.c)
 SRC			= $(addprefix $(SRC_DIR)/, main.c) \
 				$(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
