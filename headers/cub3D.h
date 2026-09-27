@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/09/27 17:00:40 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 19:23:48 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef enum e_err_type
 
 typedef struct s_map
 {
+	char	*file;
     char	*path[4];
     int		rgb_av[6];
 	char	**identifier;
@@ -67,7 +68,7 @@ typedef struct s_map
 	char	player;
 }	t_map;
 
-t_monitor	monitor(t_map *map, char *file);
+t_monitor	monitor(t_map *map);
 
 t_id_res	valid_identifier(t_map *map, char *str);
 t_id_res	valid_color(t_map *map, char *str);
@@ -77,6 +78,8 @@ int			readthemap(t_map *map, char *line);
 int			texture_errors(int error_type);
 int			empty_flag(char *l);
 int			map_errors(int error_type);
+
+void    	exit_cleanup(t_map *map, char *perr_msg, int status);
 
 
 #endif

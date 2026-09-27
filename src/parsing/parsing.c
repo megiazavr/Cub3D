@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/09/27 17:00:28 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 19:23:27 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int parseconfig(t_map *map, char *line) {
 	if (res == COLOR)
 		res = valid_color(map, line);
 	if (res == ERROR)
-		exit(1);
+		exit_cleanup(map, NULL, EXIT_FAILURE);
 	return (0);
 }
 
@@ -70,15 +70,15 @@ static void	monitor_loop(t_map *map, int fd, int in_map)
 }
 
 //TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
-t_monitor monitor(t_map *map, char *file)
+t_monitor monitor(t_map *map)
 {
 	// char	*line; // TODO: delete if norm adjustments are good
 	int 	fd;
 	int		in_map;
 
-	fd = open(file, O_RDONLY);
+	fd = open(map->file, O_RDONLY);
 	if (fd == -1)
-		return (perror("Opening .cub file failed"), EXIT_FAILURE);
+		exit_cleanup(map, "Opening .cub file failed", EXIT_FAILURE);
 	map->one_player_per_map = 0;
 	in_map = 0;
 	monitor_loop(map, fd, in_map);

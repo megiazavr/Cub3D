@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/09/27 17:25:04 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 19:28:06 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	texture_errors(int error_type)
 {
 	char	*err_msg;
 
-	ft_putendl_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd("Texture parsing error: ", STDERR_FILENO);
 	if (error_type == ERR_IDENTIFIER)
 		err_msg = "Use one of these identifiers: NO, SO, WE, EA with path && F, C";
 	else if (error_type == ERR_RGB_AV)
