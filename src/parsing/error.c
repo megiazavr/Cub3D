@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/09/27 19:28:06 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 20:44:56 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	texture_errors(int error_type)
 	return (0);
 }
 
-int	map_errors(int error_type)
+int	map_errors(int error_type) // TODO: why return is int? change to void?
 {
 	char	*err_msg;
 
@@ -43,5 +43,8 @@ int	map_errors(int error_type)
 		//exit (1);
 	}
 	ft_putendl_fd(err_msg, STDERR_FILENO);
+	// TODO: change return of this function to void, delete return (0) below,
+	// add t_map *map to functions args and uncomment exit_cleanup()
+	// exit_cleanup(map, NULL, EXIT_FAILURE);
 	return (0);
 }
