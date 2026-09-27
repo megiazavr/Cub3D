@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/09/03 20:37:24 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 17:00:40 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,48 @@
 # include <unistd.h>
 # include "../libs/libft/libft.h"
 
-typedef enum e_monitor {
+typedef enum e_monitor
+{
 	CONFIG,
 	MAP
 }	t_monitor;
 
-typedef enum e_player {
+typedef enum e_player
+{
 	N,
 	S,
 	W,
 	E
 }	t_player;
 
-typedef enum e_maps_data {
+typedef enum e_map_ids
+{
 	NO,
 	SO,
 	WE,
 	EA,
 	C,
 	F	
-}	t_identifiers;
+}	t_map_ids;
 
-typedef enum e_ident_results {
+typedef enum e_id_res
+{
 	TEXTURE,
 	COLOR,
 	ERROR
-}	t_results;
+}	t_id_res;
 
-typedef enum e_errors {
+typedef enum e_err_type
+{
 	ERR_IDENTIFIER,
 	ERR_RGB_AV,
 	ERR_RGB_AV2,
 	ERR_PLAYER,
 	ERR_MAP_SPACE
-}	t_error_type;
+}	t_err_type;
 
-typedef struct s_map {
+typedef struct s_map
+{
     char	*path[4];
     int		rgb_av[6];
 	char	**identifier;
@@ -63,8 +69,8 @@ typedef struct s_map {
 
 t_monitor	monitor(t_map *map, char *file);
 
-t_results	valid_identifier(t_map *map, char *str);
-t_results	valid_color(t_map *map, char *str);
+t_id_res	valid_identifier(t_map *map, char *str);
+t_id_res	valid_color(t_map *map, char *str);
 
 int			parseconfig(t_map *map, char *line);
 int			readthemap(t_map *map, char *line);

@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/09/21 22:38:44 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 17:00:28 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //TODO:SHOULD I ALSO DO T_RESULTS AND RETURN RESULT AS A COLOR OR MAP ETC
 int parseconfig(t_map *map, char *line) {
-	t_results 	res;
+	t_id_res 	res;
 
 	res = valid_identifier(map, line);
 	if (res == COLOR)
@@ -80,7 +80,7 @@ t_monitor monitor(t_map *map, char *file)
 	if (fd == -1)
 		return (perror("Opening .cub file failed"), EXIT_FAILURE);
 	map->one_player_per_map = 0;
-	//in_map = 0;
+	in_map = 0;
 	monitor_loop(map, fd, in_map);
 	// TODO: delete commented code below if norm adjustments are good
 	// line = get_next_line(fd);

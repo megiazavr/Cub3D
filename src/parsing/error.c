@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/09/21 22:55:12 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 16:48:44 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ int	texture_errors(int error_type)
 	if (error_type == ERR_IDENTIFIER)
 		err_msg = "Use one of these identifiers: NO, SO, WE, EA with path && F, C";
 	else if (error_type == ERR_RGB_AV)
-		err_msg = "There should be 3 (three) RGB arguments!";
+		err_msg = "Colours must be strictly formatted as 'R,G,B'. E.g: 0,100,255";
 	else if (error_type == ERR_RGB_AV2)
-		err_msg = "RGB args should be inside [0, 255] diaposon!";
-	else
-		return (0);
+		err_msg = "R,G,B colours must be in range [0, 255]";
 	ft_putendl_fd(err_msg, STDERR_FILENO);
 	return (0);
 }
@@ -36,7 +34,7 @@ int	map_errors(int error_type)
 	ft_putendl_fd("Error: ", STDERR_FILENO);
 	if (error_type == ERR_PLAYER)
 	{
-		err_msg = "Use one of those to identify the player 'N', 'S', 'W', 'E'";
+		err_msg = "Use 'N', 'S', 'W', or 'E' to define orientation player faces";
 		//exit (1);
 	}
 	if (error_type == ERR_MAP_SPACE)

@@ -6,13 +6,13 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/09/21 22:53:54 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/09/27 17:00:28 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-static t_results	valid_cardinal_pts(t_map *map)
+static t_id_res	valid_cardinal_pts(t_map *map)
 {
 	if (ft_strcmp(map->identifier[0], "NO") == 0)
 	{
@@ -37,7 +37,7 @@ static t_results	valid_cardinal_pts(t_map *map)
 	return (texture_errors(ERR_IDENTIFIER), ERROR);
 }
 
-t_results	valid_identifier(t_map *map, char *str)
+t_id_res	valid_identifier(t_map *map, char *str)
 {
 	map->identifier = ft_split(str, ' ');
 	if (map->identifier[0] == NULL)
