@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/09/27 20:44:56 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/01 23:02:43 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	texture_errors(int error_type)
 
 	ft_putstr_fd("Texture parsing error: ", STDERR_FILENO);
 	if (error_type == ERR_IDENTIFIER)
-		err_msg = "Use one of these identifiers: NO, SO, WE, EA with path && F, C";
+		err_msg = "Use only these identifiers: NO, SO, WE, EA with path && F, C";
+	// TODO: set up better detailed error msg macros in its own header file
 	else if (error_type == ERR_RGB_AV)
 		err_msg = "Colors must be strictly formatted as 'R,G,B'. E.g: 0,100,255";
 	else if (error_type == ERR_RGB_AV2)
@@ -31,10 +32,10 @@ int	map_errors(int error_type) // TODO: why return is int? change to void?
 {
 	char	*err_msg;
 
-	ft_putendl_fd("Error: ", STDERR_FILENO);
+	ft_putendl_fd("Error", STDERR_FILENO);
 	if (error_type == ERR_PLAYER)
 	{
-		err_msg = "Use 'N', 'S', 'W', or 'E' to define orientation player faces";
+		err_msg = "Use 'N', 'S', 'W', or 'E' to set orientation player faces";
 		//exit (1);
 	}
 	if (error_type == ERR_MAP_SPACE)

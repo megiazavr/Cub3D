@@ -6,16 +6,18 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/09/27 19:24:05 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/02 01:29:07 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3D.h"
 
-void    exit_cleanup(t_map *map, char *perr_msg, int status)
+void    exit_cleanup(t_map *map, t_err_type err, int status)
 {
-    if (perr_msg)
-        perror(perr_msg);
+    // depending on err_type, call appropriate err function
+    // TODO: revise functions that have a perr_msg and move it to cub3D_err.h
+    // if (perr_msg)
+    //     perror(perr_msg);
     if (map->file)
         free(map->file);
     exit(status);
