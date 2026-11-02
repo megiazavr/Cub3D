@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 01:27:23 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:12:53 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include "../libs/libft/libft.h"
+# include "cub3D_err.h"
 
 typedef enum e_monitor
 {
@@ -50,20 +51,22 @@ typedef enum e_id_res
 	ERROR
 }	t_id_res;
 
-typedef enum e_err_type
-{
-	ERR_IDENTIFIER,
-	ERR_RGB_AV,
-	ERR_RGB_AV2,
-	ERR_PLAYER,
-	ERR_MAP_SPACE
-}	t_err_type;
+// typedef enum e_err_type
+// {
+// 	VALID,
+// 	ERR_IDENTIFIER,
+// 	ERR_RGB_AV,
+// 	ERR_RGB_AV2,
+// 	ERR_MAP_,
+// 	ERR_PLAYER,
+// 	ERR_MAP_SPACE
+// }	t_err_type;
 
 typedef struct s_map
 {
 	char	*file;
-    char	*n_s_e_w_paths[4];
-    int		rgb_c_f[6];
+	char	*n_s_e_w_paths[4];
+	int		rgb_c_f[6];
 	char	**identifier; // TODO: move to another struct for temp validations?
 	int		one_player_per_map;
 	char	player;
@@ -76,11 +79,8 @@ t_id_res	parse_map_identifiers(t_map *map, char *line);
 
 int			parseconfig(t_map *map, char *line);
 int			readthemap(t_map *map, char *line);
-int			texture_errors(int error_type);
 bool		empty_flag(char *l);
-int			map_errors(int error_type);
 
-void    	exit_cleanup(t_map *map, t_err_type err, int status);
-
+void		exit_cleanup(t_map *map, t_err_type err, char *perr_msg);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/02 01:10:38 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/02 22:20:00 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ OBJ_DIR 	= obj
 OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
-				parsing_helper.c error.c read_map.c)
+				parsing_helper.c exit.c read_map.c)
 SRC			= $(addprefix $(SRC_DIR)/, main.c) \
 				$(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
-HEADERS 	= $(addprefix headers/, cub3D.h)
+HEADERS 	= $(addprefix headers/, cub3D.h cub3D_err.h)
 
 LIBS_DIR	= ./libs
 LIBFT		= $(LIBS_DIR)/libft/libft.a

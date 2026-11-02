@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 01:24:04 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/02 21:10:56 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ static void	valid_identifier(t_map *map)
 		else if (ft_strcmp(map->identifier[0], "F") == 0)
 			valid_color(map, F);
 		else
-			exit_cleanup(map, char *perr_msg, EXIT_FAILURE);
+			exit_cleanup(map, t_err_type err, char *perr_msg);
 	}
 	return ;
 }
