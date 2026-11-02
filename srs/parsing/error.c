@@ -41,12 +41,17 @@ int map_errors(int error_type)
     {
         write(2, "Error\n", 6);
         write(2, "Use one of those to identify the player 'N', 'S', 'W', 'E'", 52);
-        //exit (1);
+        exit (1);
     }
     if (error_type == ERR_MAP_SPACE) {
         write(2, "Error\n", 6);
         write(2, "Don't use more space than two", 29);
-        //exit (1);
+        exit (1);
+    }
+    if (error_type == ERR_MAP_NOT_CLOSED) {
+        write(2, "Error\n", 6);
+        write(2, "The map must be closed/surrounded by walls\n", 43);
+        exit (1);
     }
     return (0);
 }
