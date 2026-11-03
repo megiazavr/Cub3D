@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 17:37:53 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 18:40:51 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ typedef struct s_line_node
 	struct s_line_node	*next;
 }	t_line_node;
 
-typedef struct s_lines
-{
-	t_line_node	*head;
-	t_line_node	*tail;
-}	t_lines;
+// typedef struct s_lines
+// {
+// 	t_line_node	*head;
+// 	t_line_node	*tail;
+// }	t_lines;
 
 typedef struct s_map {
 	char            *file;
-	char            **grid;
-	int		        rows;
+	//char            **grid;
+	//int		        rows;
 	int		        space;
-	t_lines			lines;
+	//t_lines			lines;
 	char			player_dir;
 	int				player_x;
 	int				player_y;
@@ -79,7 +79,7 @@ t_id_res valid_identifier(t_map *map, char *str);
 t_id_res valid_color(t_map *map, char *str);
 
 int     parseconfig(t_map *map, char *line);
-int     readthemap(t_map *map, char *line);
+int     readthemap(t_map *map, char *l);
 void    build_grid(t_map *map);
 bool     empty_flag(char *l);
 void    check_walls(t_map *map);

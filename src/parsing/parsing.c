@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 18:06:45 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 18:59:34 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,21 @@ static void monitor_loop(t_map *map, int fd, bool in_map)
 	}
 }
 
-t_monitor monitor(t_map *map) {
-	int 		fd;
+// t_monitor monitor(t_map *map) {
+// 	int 		fd;
 
-	map->identifier = NULL;
-	fd = open(map->file, O_RDONLY);
-	if (fd == -1)
-		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-	map->one_player_per_map = 0;
-	map->rows = 0;
-	map->lines.head = NULL;
-	map->lines.tail = NULL;
-	monitor_loop(map, fd, false);
-	build_grid(map);
-	if (map->one_player_per_map == 0)
-		exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
-	//check_walls(map);
-	return (MAP);
-}
+// 	map->identifier = NULL;
+// 	fd = open(map->file, O_RDONLY);
+// 	if (fd == -1)
+// 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
+// 	map->one_player_per_map = 0;
+// 	map->rows = 0;
+// 	map->lines.head = NULL;
+// 	map->lines.tail = NULL;
+// 	monitor_loop(map, fd, false);
+// 	build_grid(map);
+// 	if (map->one_player_per_map == 0)
+// 		exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
+// 	//check_walls(map);
+// 	return (MAP);
+// }

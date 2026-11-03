@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/03 14:21:30 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 18:22:44 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ player faces"
 /* Errors messages with perror() */
 # define ERR_OPEN_MSG		"Opening .cub file failed"
 # define ERR_MAP_ID			"map->identifier is NULL"
+
+
 
 #endif
