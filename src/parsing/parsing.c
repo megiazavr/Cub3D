@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 17:37:05 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 18:06:45 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,9 @@ static void monitor_loop(t_map *map, int fd, bool in_map)
 				line = get_next_line(fd);
 				continue ;
 			}
-			//in_map = true;
+			in_map = true;
 		}
-		else if (in_map == true)
-			readthemap(map, line);
+		readthemap(map, line);
 		line = get_next_line(fd);
 	}
 }
