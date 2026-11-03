@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_err.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/03 00:12:31 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 14:21:30 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_ERR_H
 # define CUB3D_ERR_H
+
+// typedef enum e_errors {
+//     ERR_IDENTIFIER,
+//     ERR_RGB_AV,
+//     ERR_RGB_AV2,
+// 	ERR_PLAYER,
+// 	ERR_MAP_SPACE,
+// 	ERR_MAP_NOT_CLOSED
+// }   t_error_type;
 
 typedef enum e_err_type
 {
@@ -44,6 +53,7 @@ its file path"
 # define ERR_PLAYER_MSG		"Use 'N', 'S', 'W', or 'E' to set orientation \
 player faces"
 # define ERR_MAP_SPACE_MSG	"Can't have 2 or more consecutive spaces"
+# define ERR_MAP_NOT_CLOSED_MSG	"The map must be closed/surrounded by walls"
 
 /* Errors messages with perror() */
 # define ERR_OPEN_MSG		"Opening .cub file failed"

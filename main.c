@@ -25,7 +25,8 @@ int main(int ac, char **av) {
     len = ft_strlen(file);
     if (len < 4 || ft_strcmp(file + len - 4, ".cub") != 0)
         return (write(2, "Error\nFile must have only .cub extension", 40), 1);
-    monitor(&map, file);
+    map.file = file;
+    monitor(&map);
     return (0);
 }
 

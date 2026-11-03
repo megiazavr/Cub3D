@@ -6,149 +6,89 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/08/30 19:17:52 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 17:37:05 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
 int parseconfig(t_map *map, char *line) {
-	t_results 	res;
+	t_id_res 	res;
 
 	res = valid_identifier(map, line);
 	if (res == COLOR)
 		res = valid_color(map, line);
 	if (res == ERROR)
-		exit(1);
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
 	return (0);
 }
 
-static void caller(t_map *map, char *line)
+static t_id_res is_config_identifier(char *line)
 {
-	if (map->mode == CONFIG) {
-		map->parsing.identifier = ft_split(line, ' ');
-		if (map->parsing.identifier[0] && (ft_strcmp(map->parsing.identifier[0], "NO") == 0
-			|| ft_strcmp(map->parsing.identifier[0], "SO") == 0
-			|| ft_strcmp(map->parsing.identifier[0], "WE") == 0
-			|| ft_strcmp(map->parsing.identifier[0], "EA") == 0
-			|| ft_strcmp(map->parsing.identifier[0], "F") == 0
-			|| ft_strcmp(map->parsing.identifier[0], "C") == 0))
-			parseconfig(map, line);
-		else {
-			map->mode = MAP;
-			map->player.one_gamer_per_map = readthemap(map, line);
-		}
-	}
-	else if (map->mode == MAP)
-		map->player.one_gamer_per_map = readthemap(map, line);
+	char		**av;
+	t_id_res	res;
+
+	av = ft_split(line, ' '); //splitting to see the first word 
+	res = ERROR;
+	if (av[0] && (ft_strcmp(av[0], "NO") == 0
+		|| ft_strcmp(av[0], "SO") == 0
+		|| ft_strcmp(av[0], "WE") == 0
+		|| ft_strcmp(av[0], "EA") == 0
+		|| ft_strcmp(av[0], "F") == 0
+		|| ft_strcmp(av[0], "C") == 0))
+		res = TEXTURE;
+	free_split(av);
+	return (res);
 }
 
-static void build_grid(t_map *map)
+static void monitor_loop(t_map *map, int fd, bool in_map)
 {
-	t_line_node	*node;
-	t_line_node	*next;
-	int			i;
+	char	*line;
+	//int i;
 
-	map->grid = malloc(sizeof(char *) * (map->rows + 1));
-	if (!map->grid)
-		return ;
-	node = map->lines_head;
-	i = 0;
-	while (node)
-	{
-		map->grid[i] = node->line;
-		next = node->next;
-		free(node);
-		i++;
-		node = next;
-	}
-	map->grid[map->rows] = NULL;
-}
-
-t_monitor monitor(t_map *map, char *file) {
-	char		*line;
-	int 		fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (perror("OOPS "), 0);
-	map->player.one_gamer_per_map = 0;
-	map->rows = 0;
-	map->lines_head = NULL;
-	map->lines_tail = NULL;
-	map->mode = CONFIG;
 	line = get_next_line(fd);
+	//i = 0;
 	while (line != NULL)
 	{
-		if (empty_flag(line)) {
+		if (empty_flag(line) == true) {
 			line = get_next_line(fd);
 			continue ;
 		}
-		caller(map, line);
+		// if (empty_flag(line)) {
+		// 	line = get_next_line(fd);
+		// 	continue ;
+		// }
+		if (in_map == false)
+		{
+			if (is_config_identifier(line) != ERROR)
+			{
+				parseconfig(map, line);
+				line = get_next_line(fd);
+				continue ;
+			}
+			//in_map = true;
+		}
+		else if (in_map == true)
+			readthemap(map, line);
 		line = get_next_line(fd);
 	}
+}
+
+t_monitor monitor(t_map *map) {
+	int 		fd;
+
+	map->identifier = NULL;
+	fd = open(map->file, O_RDONLY);
+	if (fd == -1)
+		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
+	map->one_player_per_map = 0;
+	map->rows = 0;
+	map->lines.head = NULL;
+	map->lines.tail = NULL;
+	monitor_loop(map, fd, false);
 	build_grid(map);
-	if (map->player.one_gamer_per_map == 0)
-		map_errors(ERR_PLAYER);
-	check_walls(map);
+	if (map->one_player_per_map == 0)
+		exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
+	//check_walls(map);
 	return (MAP);
-}
-
-static int scan_map_char(t_map *map, char *l, int j)
-{
-	if (l[j] == '0' || l[j] == '1')
-		map->space = 0;
-	else if (l[j] == ' ') {
-		map->space++;
-		if (map->space > 2)
-			map_errors(ERR_MAP_SPACE);
-	}
-	else if (l[j] == 'N' || l[j] == 'S' || l[j] == 'W' || l[j] == 'E') {
-		map->space = 0;
-		map->player.one_gamer_per_map += 1;
-		if (map->player.one_gamer_per_map == 1)
-		{
-			map->player.dir = l[j];
-			map->player.gamer_x = j;
-			map->player.gamer_y = map->rows;
-		}
-		if (map->player.one_gamer_per_map > 1)
-			map_errors(ERR_PLAYER);
-	}
-	else
-		map_errors(ERR_PLAYER);
-	return (j + 1);
-}
-
-static void list_append(t_map *map, char *line)
-{
-	t_line_node	*node;
-
-	node = malloc(sizeof(t_line_node));
-	if (!node)
-		return ;
-	node->line = line;
-	node->next = NULL;
-	if (!map->lines_head)
-	{
-		map->lines_head = node;
-		map->lines_tail = node;
-	}
-	else
-	{
-		map->lines_tail->next = node;
-		map->lines_tail = node;
-	}
-}
-
-int readthemap(t_map *map, char *l) {
-	int	j;
-
-	j = 0;
-	map->space = 0;
-	while (l[j])
-		j = scan_map_char(map, l, j);
-	list_append(map, l);
-	map->rows++;
-	return (map->player.one_gamer_per_map);
 }

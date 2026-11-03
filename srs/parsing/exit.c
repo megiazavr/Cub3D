@@ -6,52 +6,43 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/08/24 21:35:09 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 14:35:15 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-int texture_errors(int error_type)
+static char *category_msg(t_err_type type)
 {
-    if (error_type == ERR_IDENTIFIER)
-    {
-        write(2, "Error\n", 6);
-        write(2, "Use one of this identifiers: NO, SO, WE, EA with path && F, C", 49);
-        return (0);
-    }
-    else if (error_type == ERR_RGB_AV)
-    {
-        write(2, "Error\n", 6);
-        write(2, "It should be three rgb arguments!\n", 34);
-        return (0);
-    }
-	else if (error_type == ERR_RGB_AV2)
-    {
-        write(2, "Error\n", 6);
-        write(2, "RGB args should be inside [0, 255] diaposon!\n", 45);
-        return (0);
-    }
-    return (0);
+    if (type == ERR_ARGS)
+        return (ERR_ARGS_MSG);
+    if (type == ERR_TEXTURE)
+        return (ERR_TEXTURE_MSG);
+    if (type == ERR_MAP)
+        return (ERR_MAP_MSG);
+    return ("");
 }
 
-int map_errors(int error_type)
+void exit_cleanup(t_map *map, t_err_type type, char *detail_msg)
 {
-    if (error_type == ERR_PLAYER)
+    char *header;
+
+    if (type == ERR_PERR)
     {
         write(2, "Error\n", 6);
-        write(2, "Use one of those to identify the player 'N', 'S', 'W', 'E'", 52);
-        exit (1);
+        perror(detail_msg);
     }
-    if (error_type == ERR_MAP_SPACE) {
+    else if (type != VALID)
+    {
+        header = category_msg(type);
         write(2, "Error\n", 6);
-        write(2, "Don't use more space than two", 29);
-        exit (1);
+        write(2, header, ft_strlen(header));
+        write(2, detail_msg, ft_strlen(detail_msg));
+        write(2, "\n", 1);
     }
-    if (error_type == ERR_MAP_NOT_CLOSED) {
-        write(2, "Error\n", 6);
-        write(2, "The map must be closed/surrounded by walls\n", 43);
-        exit (1);
-    }
-    return (0);
+    free_split(map->identifier);
+    map->identifier = NULL;
+    if (type == VALID)
+        exit (0);
+    exit (1);
 }

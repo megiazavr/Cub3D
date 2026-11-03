@@ -6,26 +6,42 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/08/26 18:30:05 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/03 17:32:11 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-int empty_flag(char *l)
+void free_split(char **arr)
 {
 	int	i;
-	int	empty_l;
 
+	if (!arr)
+		return ;
 	i = 0;
-	empty_l = 1;
-	while (l[i])
+	while (arr[i])
 	{
-		if (l[i] != ' ' && l[i] != '\t' && l[i] != '\n' && l[i] != '\r')
-			empty_l = 0;
+		free(arr[i]);
 		i++;
 	}
-	if (i > 0 && l[i - 1] == '\n')
-		l[i - 1] = '\0';
-	return (empty_l);
+	free(arr);
+}
+
+bool empty_flag(char *l)
+{
+	bool	empty;
+
+	empty = true;
+	while (*l)
+	{
+		if (*l == '\n')
+		{
+			*l = '\0';
+			break ;
+		}
+		if (*l != ' ' && *l != '\t' && *l != '\r')
+			empty = false;
+		l++;
+	}
+	return (empty);
 }
