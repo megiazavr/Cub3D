@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 21:10:56 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 00:43:19 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,16 @@ static void	valid_color(t_map *map, t_map_ids id)
 		parse_rgb(map, rgb, id);
 	else
 		exit_cleanup(map, char *perr_msg, EXIT_FAILURE);
+		// have to free(trmd_line) before calling exit_cleanup()
 	return ;
 }
 static void	valid_texture_path(t_map *map, t_map_ids id)
 {
-	if ( /* path is valid filename and opens? */)
+	if (map->identifier[1])
 		map->n_s_e_w_paths[id] = map->identifier[1];
 	else
-		exit_cleanup(map, char *perr_msg, EXIT_FAILURE);
+		exit_cleanup(map, ERR_TEXTURE, EXIT_FAILURE);
+		// have to free(trmd_line) before calling exit_cleanup()
 	return ;
 }
 
@@ -156,7 +158,8 @@ static void	valid_identifier(t_map *map)
 		else if (ft_strcmp(map->identifier[0], "F") == 0)
 			valid_color(map, F);
 		else
-			exit_cleanup(map, t_err_type err, char *perr_msg);
+			exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
+			// have to free(trmd_line) before calling exit_cleanup()
 	}
 	return ;
 }
@@ -167,10 +170,9 @@ t_id_res	parse_map_identifiers(t_map *map, char *line)
 
 	trmd_line = ft_strtrim(line, " \n\t\v");
 	map->identifier = ft_split(trmd_line, ' ');
-	if (map->identifier)
-		valid_identifier(map);
-	else
-		exit_cleanup(map, char *perr_msg, EXIT_FAILURE);
+	if (!map->identifier)
+		exit_cleanup(map, ERR_PERR, EXIT_FAILURE);
+	valid_identifier(map);
 	free(trmd_line);
 	return (ERROR);
 }

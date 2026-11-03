@@ -6,38 +6,53 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 22:31:11 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/02 23:28:10 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-static void	err_msg(t_err_type err, char *perr_msg)
+static void	print_err_msg(t_err_type err, char *err_msg)
 {
 	ft_putendl_fd("Error", STDOUT_FILENO);
 	ft_putendl_fd("Error", STDERR_FILENO);
 	if (err == ERR_TEXTURE)
 	{
-		ft_putstr_fd(ERR_TEXTURE_MSG, STDOUT_FILENO);
-		ft_putstr_fd(ERR_TEXTURE_MSG, STDERR_FILENO);
+		ft_putendl_fd(ERR_TEXTURE_MSG, STDOUT_FILENO);
+		ft_putendl_fd(ERR_TEXTURE_MSG, STDERR_FILENO);
 	}
 	else if (err == ERR_MAP)
 	{
-		ft_putstr_fd(ERR_MAP_MSG, STDOUT_FILENO);
-		ft_putstr_fd(ERR_MAP_MSG, STDERR_FILENO);
+		ft_putendl_fd(ERR_MAP_MSG, STDOUT_FILENO);
+		ft_putendl_fd(ERR_MAP_MSG, STDERR_FILENO);
 	}
-	ft_putstr_fd(perr_msg, STDOUT_FILENO);
-	ft_putstr_fd(perr_msg, STDERR_FILENO);
+	if (err == ERR_PERR)
+		perror(err_msg);
+	else
+		ft_putendl_fd(err_msg, STDERR_FILENO);
+	ft_putendl_fd(err_msg, STDOUT_FILENO);
 	return ;
 }
 /* TODO: confirm if we need error msgs in stdout and stdin, and perror() */
 
-void	exit_cleanup(t_map *map, t_err_type err, char *perr_msg)
+void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 {
+	int	i;
+
 	if (err != VALID)
-		err_msg(err, perr_msg);
+		print_err_msg(err, err_msg);
 	if (map->file)
 		free(map->file);
+	if (map->identifier)
+	{
+		i = 0;
+		while (map->identifier[i])
+		{
+			free(map->identifier[i]);
+			i++;
+		}
+		free(map->identifier);
+	}
 	if (err != VALID)
 		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);

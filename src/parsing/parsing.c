@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 00:48:15 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 00:38:43 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static void	monitor_loop(t_map *map, int fd, int in_map)
 			line = get_next_line(fd);
 			continue ;
 		}
+		/* check if *n_s_e_w_paths[4] are not NULL.
+		if there's a NULL call parse_map_identifiers() */
 		res = parse_map_identifiers(map, line);
 		if (res == COLOR)
 			parseconfig(map, line);
@@ -105,12 +107,12 @@ static void	monitor_loop(t_map *map, int fd, int in_map)
 t_monitor monitor(t_map *map)
 {
 	// char	*line; // TODO: delete if norm adjustments are good
-	int 	fd;
-	int		in_map;
+	int fd;
+	int	in_map;
 
 	fd = open(map->file, O_RDONLY);
 	if (fd < 0)
-		exit_cleanup(map, "Opening .cub file failed", EXIT_FAILURE);
+		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
 	map->one_player_per_map = 0;
 	in_map = 0;
 	monitor_loop(map, fd, in_map);

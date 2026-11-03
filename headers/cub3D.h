@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 21:12:53 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/02 23:08:49 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int			parseconfig(t_map *map, char *line);
 int			readthemap(t_map *map, char *line);
 bool		empty_flag(char *l);
 
-void		exit_cleanup(t_map *map, t_err_type err, char *perr_msg);
+void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
 #endif
