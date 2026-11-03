@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/03 00:12:31 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 22:13:36 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ e.g: 0,100,255"
 # define ERR_RGB_AV2_MSG	"R,G,B colors must be in range [0, 255]"
 # define ERR_MISSING_ID		"Map file must include identifiers at beginning of line \
 (not counting spaces): NO, SO, WE, EA, F, C"
-# define ERR_MISSING_PATH	"Each map texture identifiers must be followed by \
-its file path"
+# define ERR_MISSING_PATH	"Each map texture identifier must be followed by \
+its file path and there can only be spaces between them"
 
 /* Map parsing error messages */
 # define ERR_MAP_MSG		"Map parsing:\n"

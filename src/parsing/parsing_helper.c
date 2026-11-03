@@ -6,11 +6,27 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/01 20:06:08 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 22:24:13 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
+
+void	free_split(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 
 bool	empty_flag(char *l)
 {

@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 22:07:05 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 22:41:09 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,32 +102,49 @@
 
 static t_id_res	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 
 	if (rgb[3] != NULL)
-		return (texture_errors(ERR_RGB_AV), ERROR);
+	{
+		free_split(rgb);
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	}
+		// return (texture_errors(ERR_RGB_AV), ERROR);
 	if (rgb[0] == NULL || rgb[1] == NULL || rgb[2] == NULL)
-		return (texture_errors(ERR_RGB_AV), ERROR);
+	{
+		free_split(rgb);
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	}
+		// return (texture_errors(ERR_RGB_AV), ERROR);
 	r = ft_atoi(rgb[0]);
 	g = ft_atoi(rgb[1]);
 	b = ft_atoi(rgb[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (texture_errors(ERR_RGB_AV2), ERROR);
+	{
+		free_split(rgb);
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
+	}
+		// return (texture_errors(ERR_RGB_AV2), ERROR);
 	map->rgb_c_f[c_or_f] = (r << 16) | (g << 8) | b;
-	return (COLOR);
+	// TODO: should there a validation step of the above?
+	free_split(rgb);
+	// return (COLOR);
 }
 
 static void	valid_color(t_map *map, t_map_ids id)
 {
-	char **rgb;
+	char	**rgb;
 
 	rgb = ft_split(map->identifier[1], ',');
 	if (rgb)
 		parse_rgb(map, rgb, id);
 	else
-		exit_cleanup(map, char *perr_msg, EXIT_FAILURE);
+	{
+		free_split(rgb);
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	}
 	return ;
 }
 static void	valid_texture_path(t_map *map, t_map_ids id)
@@ -135,7 +152,7 @@ static void	valid_texture_path(t_map *map, t_map_ids id)
 	if (map->identifier[1])
 		map->n_s_e_w_paths[id] = map->identifier[1];
 	else
-		exit_cleanup(map, ERR_TEXTURE, EXIT_FAILURE);
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_PATH);
 	return ;
 }
 /* TODO: add verification of open() of file in path at earliest stage possible */

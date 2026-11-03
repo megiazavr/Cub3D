@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 00:38:43 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 22:19:46 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static void	monitor_loop(t_map *map, int fd, int in_map)
 		line = get_next_line(fd);
 	}
 }
+/* TODO: don't forget to free(line) before any exit_cleanup() */
 
 //TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
 t_monitor monitor(t_map *map)
