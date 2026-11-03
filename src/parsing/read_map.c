@@ -3,92 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/03 00:00:00 by megi              ##    #+#             */
-/*   Updated: 2026/11/03 00:00:00 by megi             ###   ########.fr       */
+/*   Created: 2026/09/21 21:38:02 by ncruz-ne          #+#    #+#             */
+/*   Updated: 2026/09/27 20:29:54 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-void build_grid(t_map *map)
+//readthemeap is splitting and getting 1 massive of [identifier and the path
+//TODO: CHECK IF I CAN D I++ ONCE
+int readthemap(t_map *map, char *l)
 {
-	t_line_node	*node;
-	t_line_node	*next;
-	int			i;
+	int	i;
+	int	space;
 
-	map->grid = malloc(sizeof(char *) * (map->rows + 1));
-	if (!map->grid)
-		return ;
-	node = map->lines.head;
-	i = 0;
-	while (node)
+	(void)map;
+	i = -1;
+	space = 0;
+	while (l[i])
 	{
-		map->grid[i] = node->line;
-		next = node->next;
-		free(node);
-		i++;
-		node = next;
-	}
-	map->grid[map->rows] = NULL;
-}
-
-static int scan_map_char(t_map *map, char *l, int j)
-{
-	if (l[j] == '0' || l[j] == '1')
-		map->space = 0;
-	else if (l[j] == ' ') {
-		map->space++;
-		if (map->space > 2)
-			exit_cleanup(map, ERR_MAP, ERR_MAP_SPACE_MSG);
-	}
-	else if (l[j] == 'N' || l[j] == 'S' || l[j] == 'W' || l[j] == 'E') {
-		map->space = 0;
-		map->one_player_per_map += 1;
-		if (map->one_player_per_map == 1)
+		if (l[i] == '0' || l[i] == '1')
+			i++;
+		else if (l[i] == ' ')
 		{
-			map->player_dir = l[j];
-			map->player_x = j;
-			map->player_y = map->rows;
+			space++;
+			if (space > 2)
+				return (map_errors(ERR_MAP_SPACE), ERROR);
+			i++;
+		}			
+		else if (l[i] == 'N' || l[i] == 'S' || l[i] == 'W' || l[i] == 'E')
+		{
+			space = 0;
+			map->one_player_per_map++;
+			if (map->one_player_per_map == 1)
+				map->player = l[i];
+			if (map->one_player_per_map > 1 || map->one_player_per_map < 1) // TODO: change to just else?
+				map_errors(ERR_PLAYER);
+			i++;
 		}
-		if (map->one_player_per_map > 1)
-			exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
+		// TODO: are the conditions below correct?
+		if (map->one_player_per_map == 0)
+			map_errors(ERR_PLAYER);
+		else
+		{
+			map_errors(ERR_PLAYER);
+			i++;
+		}
 	}
-	else
-		exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
-	return (j + 1);
-}
-
-static void list_append(t_map *map, char *line)
-{
-	t_line_node	*node;
-
-	node = malloc(sizeof(t_line_node));
-	if (!node)
-		return ;
-	node->line = line;
-	node->next = NULL;
-	if (!map->lines.head)
-	{
-		map->lines.head = node;
-		map->lines.tail = node;
-	}
-	else
-	{
-		map->lines.tail->next = node;
-		map->lines.tail = node;
-	}
-}
-
-int readthemap(t_map *map, char *l) {
-	int	j;
-
-	j = 0;
-	map->space = 0;
-	while (l[j])
-		j = scan_map_char(map, l, j);
-	list_append(map, l);
-	map->rows++;
 	return (map->one_player_per_map);
 }
