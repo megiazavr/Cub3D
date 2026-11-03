@@ -3,176 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 00:43:19 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/08/26 18:30:19 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
-#include <cstdlib>
 
-// static t_id_res	valid_cardinal_pts(t_map *map)
-// {
-// 	if (ft_strcmp(map->identifier[0], "NO") == 0)
-// 	{
-// 		map->n_s_e_w_paths[NO] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	else if (ft_strcmp(map->identifier[0], "SO") == 0)
-// 	{
-// 		map->n_s_e_w_paths[SO] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	else if (ft_strcmp(map->identifier[0], "EA") == 0)
-// 	{
-// 		map->n_s_e_w_paths[EA] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	else if (ft_strcmp(map->identifier[0], "WE") == 0)
-// 	{
-// 		map->n_s_e_w_paths[WE] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	texture_errors(ERR_IDENTIFIER);
-// 	return (ERROR);
-// }
-
-// static t_id_res	valid_cardinal_pts(t_map *map)
-// {
-// 	if (ft_strcmp(map->identifier[0], "NO") == 0)
-// 	{
-// 		map->n_s_e_w_paths[NO] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	else if (ft_strcmp(map->identifier[0], "SO") == 0)
-// 	{
-// 		map->n_s_e_w_paths[SO] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	else if (ft_strcmp(map->identifier[0], "EA") == 0)
-// 	{
-// 		map->n_s_e_w_paths[EA] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	else if (ft_strcmp(map->identifier[0], "WE") == 0)
-// 	{
-// 		map->n_s_e_w_paths[WE] = map->identifier[1];
-// 		return (TEXTURE);
-// 	}
-// 	texture_errors(ERR_IDENTIFIER);
-// 	return (ERROR);
-// }
-
-// static t_id_res	valid_identifier(t_map *map, char *str)
-// {
-// 	// map->identifier = ft_split(str, ' ');
-// 	// if (map->identifier[0] == NULL)
-// 		// return (texture_errors(ERR_IDENTIFIER), ERROR);
-// 	if (ft_strcmp(map->identifier[0], "C") == 0
-// 		|| ft_strcmp(map->identifier[0], "F") == 0)
-// 		return (COLOR);
-// 	if (map->identifier[1] == NULL)
-// 		return (texture_errors(ERR_IDENTIFIER), ERROR);
-// 	return (valid_cardinal_pts(map));
-// 	// TODO: delete commented code below if norm adjustments are good
-// 	// if (ft_strcmp(map->identifier[0], "NO") == 0)
-// 	// {
-// 	// 	map->path[NO] = map->identifier[1];
-// 	// 	return (TEXTURE);
-// 	// }
-// 	// else if (ft_strcmp(map->identifier[0], "SO") == 0)
-// 	// {
-// 	// 	map->path[SO] = map->identifier[1];
-// 	// 	return (TEXTURE);
-// 	// }
-// 	// else if (ft_strcmp(map->identifier[0], "WE") == 0)
-// 	// {
-// 	// 	map->path[WE] = map->identifier[1];
-// 	// 	return (TEXTURE);
-// 	// }
-// 	// else if (ft_strcmp(map->identifier[0], "EA") == 0)
-// 	// {
-// 	// 	map->path[EA] = map->identifier[1];
-// 	// 	return (TEXTURE);
-// 	// }
-// 	// return (texture_errors(ERR_IDENTIFIER), ERROR);
-// }
-
-static t_id_res	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
+t_id_res valid_identifier(t_map *map, char *str)
 {
-	int r;
-	int g;
-	int b;
-
-	if (rgb[3] != NULL)
-		return (texture_errors(ERR_RGB_AV), ERROR);
-	if (rgb[0] == NULL || rgb[1] == NULL || rgb[2] == NULL)
-		return (texture_errors(ERR_RGB_AV), ERROR);
-	r = ft_atoi(rgb[0]);
-	g = ft_atoi(rgb[1]);
-	b = ft_atoi(rgb[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (texture_errors(ERR_RGB_AV2), ERROR);
-	map->rgb_c_f[c_or_f] = (r << 16) | (g << 8) | b;
-	return (COLOR);
-}
-
-static void	valid_color(t_map *map, t_map_ids id)
-{
-	char **rgb;
-
-	rgb = ft_split(map->identifier[1], ',');
-	if (rgb)
-		parse_rgb(map, rgb, id);
-	else
-		exit_cleanup(map, char *perr_msg, EXIT_FAILURE);
-		// have to free(trmd_line) before calling exit_cleanup()
-	return ;
-}
-static void	valid_texture_path(t_map *map, t_map_ids id)
-{
-	if (map->identifier[1])
-		map->n_s_e_w_paths[id] = map->identifier[1];
-	else
-		exit_cleanup(map, ERR_TEXTURE, EXIT_FAILURE);
-		// have to free(trmd_line) before calling exit_cleanup()
-	return ;
-}
-
-static void	valid_identifier(t_map *map)
-{
-	if (map->identifier[0] && map->identifier[1])
-	{
-		if (ft_strcmp(map->identifier[0], "NO") == 0)
-			valid_texture_path(map, NO);
-		else if (ft_strcmp(map->identifier[0], "SO") == 0)
-			valid_texture_path(map, SO);
-		else if (ft_strcmp(map->identifier[0], "EA") == 0)
-			valid_texture_path(map, EA);
-		else if (ft_strcmp(map->identifier[0], "WE") == 0)
-			valid_texture_path(map, WE);
-		else if (ft_strcmp(map->identifier[0], "C") == 0)
-			valid_color(map, C);
-		else if (ft_strcmp(map->identifier[0], "F") == 0)
-			valid_color(map, F);
-		else
-			exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
-			// have to free(trmd_line) before calling exit_cleanup()
+    map->identifier = ft_split(str, ' ');
+	if (map->identifier[0] == NULL)
+		exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
+	if (ft_strcmp(map->identifier[0], "C") == 0
+		|| ft_strcmp(map->identifier[0], "F") == 0)
+		return (COLOR);
+	if (map->identifier[1] == NULL)
+		exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
+	if (ft_strcmp(map->identifier[0], "NO") == 0) {
+		map->n_s_e_w_paths[NO] = map->identifier[1];
+		return (TEXTURE);
 	}
-	return ;
-}
-
-t_id_res	parse_map_identifiers(t_map *map, char *line)
-{
-	char	*trmd_line;
-
-	trmd_line = ft_strtrim(line, " \n\t\v");
-	map->identifier = ft_split(trmd_line, ' ');
-	if (!map->identifier)
-		exit_cleanup(map, ERR_PERR, EXIT_FAILURE);
-	valid_identifier(map);
-	free(trmd_line);
-	return (ERROR);
+	else if (ft_strcmp(map->identifier[0], "SO") == 0) {
+		map->n_s_e_w_paths[SO] = map->identifier[1];
+		return (TEXTURE);
+	}
+	else if (ft_strcmp(map->identifier[0], "WE") == 0) {
+		map->n_s_e_w_paths[WE] = map->identifier[1];
+		return (TEXTURE);
+	}
+	else if (ft_strcmp(map->identifier[0], "EA") == 0) {
+		map->n_s_e_w_paths[EA] = map->identifier[1];
+		return (TEXTURE);
+	}
+    exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
+    return (ERROR);
 }
