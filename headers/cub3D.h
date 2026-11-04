@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 00:30:15 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/04 20:07:28 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef enum e_map_ids
 {
 	NO,
 	SO,
-	EA,
 	WE,
-	C,
-	F	
+	EA,
+	F,
+	C	
 }	t_map_ids;
 
 // typedef enum e_id_res

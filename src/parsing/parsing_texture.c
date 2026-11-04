@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 00:10:16 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/04 20:09:11 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,14 +159,14 @@ static void	valid_identifier(t_map *map)
 			valid_texture_path(map, NO);
 		else if (ft_strcmp(map->identifier[0], "SO") == 0)
 			valid_texture_path(map, SO);
-		else if (ft_strcmp(map->identifier[0], "EA") == 0)
-			valid_texture_path(map, EA);
 		else if (ft_strcmp(map->identifier[0], "WE") == 0)
 			valid_texture_path(map, WE);
-		else if (ft_strcmp(map->identifier[0], "C") == 0)
-			valid_color(map, C);
+		else if (ft_strcmp(map->identifier[0], "EA") == 0)
+			valid_texture_path(map, EA);
 		else if (ft_strcmp(map->identifier[0], "F") == 0)
 			valid_color(map, F);
+		else if (ft_strcmp(map->identifier[0], "C") == 0)
+			valid_color(map, C);
 		else
 			exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
 	}
