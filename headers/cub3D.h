@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 22:24:06 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/04 00:30:15 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,17 @@ typedef enum e_map_ids
 	F	
 }	t_map_ids;
 
+// typedef enum e_id_res
+// {
+// 	TEXTURE,
+// 	COLOR,
+// 	ERROR
+// }	t_id_res;
+
 typedef enum e_id_res
 {
-	TEXTURE,
-	COLOR,
+	DONE,
+	PENDING,
 	ERROR
 }	t_id_res;
 
@@ -74,12 +81,12 @@ typedef struct s_map
 
 t_monitor	monitor(t_map *map);
 
-t_id_res	parse_map_identifiers(t_map *map, char *line);
+void		parse_map_identifiers(t_map *map, char *line);
 // t_id_res	valid_color(t_map *map, char *str);
 
 int			parseconfig(t_map *map, char *line);
 int			readthemap(t_map *map, char *line);
-void 		free_split(char **arr);
+void		free_split(char **arr);
 bool		empty_flag(char *l);
 
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);

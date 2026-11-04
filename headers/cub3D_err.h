@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/03 22:13:36 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/03 23:44:33 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ typedef enum e_err_type
 # define ERR_TEXTURE_MSG	"Texture parsing:\n"
 # define ERR_IDENTIFIER_MSG	"Use only these identifiers: NO, SO, WE, EA with \
 file path and F, C with R,G,B colors"
-# define ERR_RGB_AV_MSG		"Colors must be strictly formatted as 'R,G,B' \
-e.g: 0,100,255"
+# define ERR_RGB_AV_MSG		"Map file must include identifiers F and C folowed by \
+at least 1 space and colors strictly formatted as 'R,G,B' e.g: 0,100,255"
 # define ERR_RGB_AV2_MSG	"R,G,B colors must be in range [0, 255]"
 # define ERR_MISSING_ID		"Map file must include identifiers at beginning of line \
 (not counting spaces): NO, SO, WE, EA, F, C"
-# define ERR_MISSING_PATH	"Each map texture identifier must be followed by \
-its file path and there can only be spaces between them"
+# define ERR_MISS_DUPE_PATH	"Each map texture identifier must appear only once, \
+be followed by its file path and there can only be spaces between them"
 
 /* Map parsing error messages */
 # define ERR_MAP_MSG		"Map parsing:\n"

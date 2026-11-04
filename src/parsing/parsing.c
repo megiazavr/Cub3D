@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 22:19:46 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/04 00:44:42 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,39 @@ int parseconfig(t_map *map, char *line)
 // 	return (false);
 // }
 
-static void	monitor_loop(t_map *map, int fd, int in_map)
+static t_id_res	identifiers_done(t_map *map)
 {
-	char		*line;
-	t_id_res	res;
+	int	i;
 
-	line = get_next_line(fd);
+	i = 0;
+	while (i < 4)
+	{
+		if (map->n_s_e_w_paths[i] == NULL)
+			break ;
+		i++;
+	}
+	if (i > 4)
+		return (ERROR);
+	else if (i < 4)
+		return (PENDING);
+	i = 0;
+	while (i < 6)
+	{
+		if (map->rgb_c_f[i] == -1)
+			break ;
+		i++;
+	}
+	if (i > 6)
+		return (ERROR);
+	else if (i < 6)
+		return (PENDING);
+	return (DONE);
+}
+
+static t_id_res	map_nrs_loop(t_map *map, int fd, int in_map, char *line)
+{
 	while (line != NULL)
 	{
-		if (empty_flag(line) == true)
-		{
-			line = get_next_line(fd);
-			continue ;
-		}
-		/* check if *n_s_e_w_paths[4] are not NULL.
-		if there's a NULL call parse_map_identifiers() */
-		res = parse_map_identifiers(map, line);
-		if (res == COLOR)
-			parseconfig(map, line);
-		else if (res == ERROR)
-		{
-			texture_errors(ERR_IDENTIFIER);
-			exit_cleanup(map, NULL, EXIT_FAILURE);
-		}
 		if (in_map == 1)
 		{
 			map->one_player_per_map = readthemap(map, line);
@@ -101,21 +111,71 @@ static void	monitor_loop(t_map *map, int fd, int in_map)
 		}
 		line = get_next_line(fd);
 	}
+	return (DONE);
 }
-/* TODO: don't forget to free(line) before any exit_cleanup() */
+
+static void	monitor_loop(t_map *map, int fd, int in_map)
+{
+	char		*line;
+	t_id_res	res;
+
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		if (empty_flag(line) == true)
+		{
+			line = get_next_line(fd);
+			continue ;
+		}
+		res = identifiers_done(map);
+		if (res == PENDING)
+			parse_map_identifiers(map, line);
+		// if (res == COLOR)
+		// 	parseconfig(map, line);
+		else if (res == ERROR)
+		{
+			free(line);
+			exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
+		}
+		else if (res == DONE)
+		{
+			if (in_map == 1)
+			{
+				map->one_player_per_map = readthemap(map, line);
+				line = get_next_line(fd);
+				continue ;
+			}
+			else
+			{
+				in_map = 1;
+				map->one_player_per_map = readthemap(map, line);
+			}
+		}
+		line = get_next_line(fd);
+	}
+}
+/* TODO: don't forget to free(line) before any exit_cleanup()
+Have to validate again loops logics and define error lofic for map_nrs_loop() */
 
 //TODO: CHECK USING ENUM IF IT'S CONFIG OR MAP AND CALL IT INSIDE MONITOR
-t_monitor monitor(t_map *map)
+t_monitor	monitor(t_map *map)
 {
 	// char	*line; // TODO: delete if norm adjustments are good
 	int fd;
 	int	in_map;
+	int	i;
 
 	fd = open(map->file, O_RDONLY);
 	if (fd < 0)
 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
 	map->one_player_per_map = 0;
 	in_map = 0;
+	i = 0;
+	while (i < 4)
+		map->n_s_e_w_paths[i++] = NULL;
+	i = 0;
+	while (i < 6)
+		map->rgb_c_f[i++] = -1;
 	monitor_loop(map, fd, in_map);
 	// TODO: delete commented code below if norm adjustments are good
 	// line = get_next_line(fd);
