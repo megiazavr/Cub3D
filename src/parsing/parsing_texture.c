@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 19:02:30 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 23:38:14 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static char	*rgb_validator(char *str)
 {
-	while (*str== ' ' || *str == '\t')
+	while (*str == ' ' || *str == '\t')
 		str++;
 	while (*str != '\0')
 	{
 		if (*str >= '0' && *str <= '9')
 			str++;
-		else if (*str== ' ' || *str== '\t')
+		else if (*str == ' ' || *str == '\t')
 		{
-			while (*str== ' ' || *str== '\t')
+			while (*str == ' ' || *str == '\t')
 				str++;
-			if (*str!= '\0')
+			if (*str != '\0')
 				return (NULL);
 		}
 		else
@@ -60,6 +60,13 @@ static char	*skip_to_rgb(char *str)
 // 		map->rgb_c_f[c_or_f] = (r << 16) | (g << 8) | b;
 // 	else
 // 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+// 	char	c_or_f_char;
+// 	if (c_or_f == C)
+// 		c_or_f_char = 'C';
+// 	else if (c_or_f == F)
+// 		c_or_f_char = 'F';
+// 	printf(">> Results after parse_rgb() for identifier %c:\n", c_or_f_char);
+// 	rgb_print(map);
 // 	return ;
 // }
 
@@ -79,16 +86,23 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
 	free_split(rgb);
-	if (map->rgb_c_f[c_or_f] != -1)
+	if (map->rgb_f_c[c_or_f - 4] != -1)
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
-	map->rgb_c_f[c_or_f] = (r << 16) | (g << 8) | b; 
+	map->rgb_f_c[c_or_f - 4] = (r << 16) | (g << 8) | b;
+	char	c_or_f_char;
+	if (c_or_f == C)
+		c_or_f_char = 'C';
+	else if (c_or_f == F)
+		c_or_f_char = 'F';
+	ft_printf(">> Results after parse_rgb() for identifier %c:\n", c_or_f_char);
+	rgb_print(map);
 	return ;
 }
 
 // static void valid_color(t_map *map, t_map_ids id)
 // {
 // 	char **rgb;
-
+//
 // 	rgb = ft_split(map->identifier[1], ',');
 // 	if (rgb && rgb[3] == NULL && rgb[0] && rgb[1] && rgb[2])
 // 		parse_rgb(map, rgb, id);
@@ -117,8 +131,8 @@ static void	valid_texture_path(t_map *map, t_map_ids id)
 	if ((int)id != map->next_identifier)
 		exit_cleanup(map, ERR_TEXTURE, ERR_WRONG_ORDER_MSG);
 	map->next_identifier++;
-	if (map->identifier[1] && map->n_s_e_w_paths[id] == NULL)
-		map->n_s_e_w_paths[id] = map->identifier[1];
+	if (map->identifier[1] && map->n_s_w_e_paths[id] == NULL)
+		map->n_s_w_e_paths[id] = map->identifier[1];
 	else
 		exit_cleanup(map, ERR_TEXTURE, ERR_MISS_DUPE_PATH);
 	return ;

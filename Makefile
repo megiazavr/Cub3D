@@ -6,7 +6,8 @@ CFLAGS		= -Wall -Wextra -Werror
 LIBFT_DIR	= ./library/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-SRCS		= src/parsing/parsing.c src/parsing/read_map.c src/parsing/parsing_texture.c src/parsing/parsing_helper.c src/parsing/exit.c src/main.c
+SRCS		= src/parsing/parsing.c src/parsing/read_map.c src/parsing/parsing_texture.c \
+			src/parsing/parsing_helper.c src/parsing/exit.c src/main.c
 OBJS		= $(SRCS:.c=.o)
 
 all: $(NAME)

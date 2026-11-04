@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 17:31:00 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 23:41:35 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ typedef struct s_map {
 	int				player_y;
 	int				one_player_per_map;
 	char			**identifier;
-	char			*n_s_e_w_paths[4];
-	int				rgb_c_f[6];
+	char			*n_s_w_e_paths[4];
+	int				rgb_f_c[2];
 	int				next_identifier;
-}   t_map;
+}	t_map;
 
 t_monitor	monitor(t_map *map);
 
@@ -94,6 +94,8 @@ void	parse_map_identifiers(t_map *map, char *line);
 int readthemap(t_map *map, char *l);
 void	exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
+// DELETE TESTER:
+void	rgb_print(t_map *map);
 
 
 #endif
