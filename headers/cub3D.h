@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 18:40:51 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 17:31:00 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,31 @@ typedef enum e_player {
 	E
 } t_player;
 
-typedef enum e_maps_data {
-    NO,
-    SO,
-    WE,
-    EA,
-    C,
-    F
-}   t_identifiers;
+typedef enum e_map_ids
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	F,
+	C
+}	t_map_ids;
 
-typedef enum e_ident_results {
+// typedef enum e_id_res
+// {
+// 	TEXTURE,
+// 	COLOR,
+// 	ERROR
+// }	t_id_res;
+
+typedef enum e_id_res
+{
+	DONE,
+	PENDING,
 	ERROR,
-    TEXTURE,
-    COLOR,
-}   t_id_res;
+	TEXTURE,
+	COLOR
+}	t_id_res;
 
 typedef struct s_line_node
 {
@@ -57,6 +68,7 @@ typedef struct s_line_node
 // 	t_line_node	*head;
 // 	t_line_node	*tail;
 // }	t_lines;
+
 
 typedef struct s_map {
 	char            *file;
@@ -71,19 +83,17 @@ typedef struct s_map {
 	char			**identifier;
 	char			*n_s_e_w_paths[4];
 	int				rgb_c_f[6];
+	int				next_identifier;
 }   t_map;
 
-t_monitor monitor(t_map *map);
+t_monitor	monitor(t_map *map);
 
-t_id_res valid_identifier(t_map *map, char *str);
-t_id_res valid_color(t_map *map, char *str);
+void free_split(char **arr);
+bool empty_flag(char *l);
+void	parse_map_identifiers(t_map *map, char *line);
+int readthemap(t_map *map, char *l);
+void	exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
-int     parseconfig(t_map *map, char *line);
-int     readthemap(t_map *map, char *l);
-void    build_grid(t_map *map);
-bool     empty_flag(char *l);
-void    check_walls(t_map *map);
-void    exit_cleanup(t_map *map, t_err_type type, char *detail_msg);
-void    free_split(char **arr);
+
 
 #endif

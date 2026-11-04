@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/03 18:22:44 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 16:11:51 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ e.g: 0,100,255"
 (not counting spaces): NO, SO, WE, EA, F, C"
 # define ERR_MISSING_PATH	"Each map texture identifiers must be followed by \
 its file path"
+# define ERR_MISS_DUPE_PATH	"Each map texture identifier must appear only once, \
+be followed by its file path and there can only be spaces between them"
+# define ERR_WRONG_ORDER_MSG	"Identifiers must appear in this exact order: \
+NO, SO, WE, EA, F, C"
 
 /* Map parsing error messages */
 # define ERR_MAP_MSG		"Map parsing:\n"
@@ -58,7 +62,5 @@ player faces"
 /* Errors messages with perror() */
 # define ERR_OPEN_MSG		"Opening .cub file failed"
 # define ERR_MAP_ID			"map->identifier is NULL"
-
-
 
 #endif

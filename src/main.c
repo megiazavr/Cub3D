@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 22:47:07 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/04 19:03:49 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	main(int ac, char **av)
 	t_map	map;
 	int		len;
 
+	map.file = NULL;
+	//map.identifier = NULL;
 	if (ac != 2)
 		exit_cleanup(&map, ERR_ARGS, ERR_NR_ARGS);
 	map.file = ft_strtrim(av[1], " \f\n\r\t\v");

@@ -6,11 +6,12 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 18:49:11 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 18:34:59 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
+
 
 static void	print_err_msg(t_err_type err, char *err_msg)
 {
@@ -25,6 +26,7 @@ static void	print_err_msg(t_err_type err, char *err_msg)
 		ft_putendl_fd(err_msg, STDERR_FILENO);
 	return ;
 }
+
 
 void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 {

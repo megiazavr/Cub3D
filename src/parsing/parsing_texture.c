@@ -6,38 +6,176 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/08/26 18:30:19 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 19:02:30 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3D.h"
+#include "../../headers/cub3D.h" // bring in t_map, t_map_ids, prototypes, error enums
 
-t_id_res valid_identifier(t_map *map, char *str)
+static char	*rgb_validator(char *str)
 {
-    map->identifier = ft_split(str, ' ');
+	while (*str== ' ' || *str == '\t')
+		str++;
+	while (*str != '\0')
+	{
+		if (*str >= '0' && *str <= '9')
+			str++;
+		else if (*str== ' ' || *str== '\t')
+		{
+			while (*str== ' ' || *str== '\t')
+				str++;
+			if (*str!= '\0')
+				return (NULL);
+		}
+		else
+			return (NULL);
+	}
+	return (str);
+}
+
+static char	*skip_to_rgb(char *str)
+{
+	// while (*str == ' ' || *str == '\t')
+	// 	str++;
+	while (*str && *str != ' ' && *str != '\t')
+		str++;
+	while (*str == ' ' || *str == '\t')
+		str++;
+	return (str);
+}
+
+// static void parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
+// {
+// 	int r;
+// 	int g;
+// 	int b;
+// 	r = ft_atoi(rgb[0]);
+// 	g = ft_atoi(rgb[1]);
+// 	b = ft_atoi(rgb[2]);
+// 	free_split(rgb);
+// 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+// 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
+// 	if (map->rgb_c_f[c_or_f] == -1 && map->rgb_c_f[c_or_f - 2] == -1
+// 		&& map->rgb_c_f[c_or_f - 4] == -1)
+// 		map->rgb_c_f[c_or_f] = (r << 16) | (g << 8) | b;
+// 	else
+// 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+// 	return ;
+// }
+
+static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	if (rgb[0] == NULL || rgb[1] == NULL || rgb[2] == NULL || rgb[3] != NULL)
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	if (!rgb_validator(rgb[0]) || !rgb_validator(rgb[1]) || !rgb_validator(rgb[2]))
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
+	r = ft_atoi(rgb[0]);
+	g = ft_atoi(rgb[1]);
+	b = ft_atoi(rgb[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
+	free_split(rgb);
+	if (map->rgb_c_f[c_or_f] != -1)
+		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	map->rgb_c_f[c_or_f] = (r << 16) | (g << 8) | b; 
+	return ;
+}
+
+// static void valid_color(t_map *map, t_map_ids id)
+// {
+// 	char **rgb;
+
+// 	rgb = ft_split(map->identifier[1], ',');
+// 	if (rgb && rgb[3] == NULL && rgb[0] && rgb[1] && rgb[2])
+// 		parse_rgb(map, rgb, id);
+// 	else
+// 	{
+// 		free_split(rgb);
+// 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+// 	}
+// 	return ;
+// }
+
+static void	valid_color(t_map *map, t_map_ids id, char *trmd_line)
+{
+	char	**rgb;
+
+	if ((int)id != map->next_identifier)
+		exit_cleanup(map, ERR_TEXTURE, ERR_WRONG_ORDER_MSG);
+	map->next_identifier++;
+	rgb = ft_split(skip_to_rgb(trmd_line), ',');
+	parse_rgb(map, rgb, id);
+	return ;
+}
+
+static void	valid_texture_path(t_map *map, t_map_ids id)
+{
+	if ((int)id != map->next_identifier)
+		exit_cleanup(map, ERR_TEXTURE, ERR_WRONG_ORDER_MSG);
+	map->next_identifier++;
+	if (map->identifier[1] && map->n_s_e_w_paths[id] == NULL)
+		map->n_s_e_w_paths[id] = map->identifier[1];
+	else
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISS_DUPE_PATH);
+	return ;
+}
+
+// static void valid_identifier(t_map *map)
+// { 
+// 	if (map->identifier[0] && map->identifier[1]) // ?
+// 	{
+// 		if (ft_strcmp(map->identifier[0], "NO") == 0)
+// 			valid_texture_path(map, NO);
+// 		else if (ft_strcmp(map->identifier[0], "SO") == 0)
+// 			valid_texture_path(map, SO);
+// 		else if (ft_strcmp(map->identifier[0], "EA") == 0)
+// 			valid_texture_path(map, EA);
+// 		else if (ft_strcmp(map->identifier[0], "WE") == 0)
+// 			valid_texture_path(map, WE);
+// 		else if (ft_strcmp(map->identifier[0], "C") == 0)
+// 			valid_color(map, C);
+// 		else if (ft_strcmp(map->identifier[0], "F") == 0)
+// 			valid_color(map, F);
+// 		else
+// 			exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
+// 	}
+// 	return ;
+// }
+
+static void	valid_identifier(t_map *map, char *trmd_line)
+{
 	if (map->identifier[0] == NULL)
-		exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
-	if (ft_strcmp(map->identifier[0], "C") == 0
-		|| ft_strcmp(map->identifier[0], "F") == 0)
-		return (COLOR);
-	if (map->identifier[1] == NULL)
-		exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
-	if (ft_strcmp(map->identifier[0], "NO") == 0) {
-		map->n_s_e_w_paths[NO] = map->identifier[1];
-		return (TEXTURE);
-	}
-	else if (ft_strcmp(map->identifier[0], "SO") == 0) {
-		map->n_s_e_w_paths[SO] = map->identifier[1];
-		return (TEXTURE);
-	}
-	else if (ft_strcmp(map->identifier[0], "WE") == 0) {
-		map->n_s_e_w_paths[WE] = map->identifier[1];
-		return (TEXTURE);
-	}
-	else if (ft_strcmp(map->identifier[0], "EA") == 0) {
-		map->n_s_e_w_paths[EA] = map->identifier[1];
-		return (TEXTURE);
-	}
-    exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
-    return (ERROR);
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
+	if (ft_strcmp(map->identifier[0], "NO") == 0)
+		valid_texture_path(map, NO);
+	else if (ft_strcmp(map->identifier[0], "SO") == 0)
+		valid_texture_path(map, SO);
+	else if (ft_strcmp(map->identifier[0], "WE") == 0)
+		valid_texture_path(map, WE);
+	else if (ft_strcmp(map->identifier[0], "EA") == 0)
+		valid_texture_path(map, EA);
+	else if (ft_strcmp(map->identifier[0], "F") == 0)
+		valid_color(map, F, trmd_line);
+	else if (ft_strcmp(map->identifier[0], "C") == 0)
+		valid_color(map, C, trmd_line);
+	else
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
+	return ;
+}
+
+void	parse_map_identifiers(t_map *map, char *line)
+{
+	char	*trmd_line;
+
+	trmd_line = ft_strtrim(line, " \n\t\v");
+	map->identifier = ft_split(trmd_line, ' ');
+	if (!map->identifier)
+		exit_cleanup(map, ERR_PERR, ERR_MAP_ID);
+	valid_identifier(map, trmd_line);
+	free(trmd_line);
+	return ;
 }

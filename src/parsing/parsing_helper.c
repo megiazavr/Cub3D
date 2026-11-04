@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/03 17:32:11 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/04 18:35:10 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 void free_split(char **arr)
 {
 	int	i;
-
 	if (!arr)
 		return ;
-	i = 0;
-	while (arr[i])
-	{
+	i = -1;
+	while (arr[++i])
 		free(arr[i]);
-		i++;
-	}
 	free(arr);
 }
 
