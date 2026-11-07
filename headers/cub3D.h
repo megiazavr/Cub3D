@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 14:35:41 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:17:07 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct s_line_node
 // 	t_line_node	*tail;
 // }	t_lines;
 
-
 typedef struct s_map
 {
 	char			*file;
@@ -93,7 +92,7 @@ typedef struct s_map
 
 t_monitor	monitor(t_map *map);
 
-void		free_arr(char **arr);
+void		free_arr(char ***arr);
 bool		empty_flag(char *l);
 void		free_and_null(char **str);
 // void		parse_map_identifiers(t_map *map, char *line);

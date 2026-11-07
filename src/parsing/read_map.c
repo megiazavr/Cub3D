@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 21:38:02 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/07 14:54:36 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:06:45 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	read_map(t_map *map, char *l)
 {
-	// map->space = 0; // TODO: delete? already initialised in main.c
 	while (*l)
 	{
 		if (*l == '0' || *l == '1')

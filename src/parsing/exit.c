@@ -6,12 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 14:30:58 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:18:23 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
-
 
 static void	print_err_msg(t_err_type err, char *err_msg)
 {
@@ -50,7 +49,7 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 		print_err_msg(err, err_msg);
 	free_and_null(&map->read_line);
 	free_and_null(&map->file);
-	free_arr(map->identifier);
+	free_arr(&map->identifier);
 	i = 0;
 	while (i < 4)
 		free_and_null(&map->n_s_w_e_paths[i++]);

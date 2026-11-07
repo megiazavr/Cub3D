@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 15:02:19 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:18:01 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f, char *trmd_line)
 
 	if (rgb_validator(rgb) != COLOR || rgb[3] != NULL)
 	{
-		free_arr(rgb);
+		free_arr(&rgb);
 		free_and_null(&trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
 	}
@@ -83,11 +83,11 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f, char *trmd_line)
 	b = ft_atoi(rgb[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		free_arr(rgb);
+		free_arr(&rgb);
 		free_and_null(&trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
 	}
-	free_arr(rgb);
+	free_arr(&rgb);
 	if (map->rgb_f_c[c_or_f - 4] != -1)
 	{
 		free_and_null(&trmd_line);
@@ -221,8 +221,7 @@ void	parse_map_identifiers(t_map *map)
 		exit_cleanup(map, ERR_PERR, ERR_MAP_ID_MSG);
 	}
 	valid_identifier(map, trmd_line);
-	free_arr(map->identifier);
-	map->identifier = NULL;
+	free_arr(&map->identifier);
 	free_and_null(&trmd_line);
 	return ;
 }

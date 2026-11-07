@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 15:02:04 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:16:54 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void	free_and_null(char **str)
 	}
 }
 
-void	free_arr(char **arr)
+void	free_arr(char ***arr)
 {
 	int	i;
 
-	if (!arr)
+	if (!arr || !*arr)
 		return ;
 	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	while ((*arr)[i])
+		free_and_null(arr[i++]);
+	free(*arr);
+	*arr = NULL;
 }
 
 bool	empty_flag(char *l)

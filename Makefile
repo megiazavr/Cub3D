@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/07 03:19:18 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/07 15:10:27 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,7 @@ OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
 				parsing_helper.c exit.c read_map.c)
-SRC			= $(addprefix $(SRC_DIR)/, main.c) \
-				$(PARSING_SRC)
+SRC			= $(addprefix $(SRC_DIR)/, main.c) $(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
@@ -102,7 +101,7 @@ norm:
 	"https://raw.githubusercontent.com/42school/norminette/master/pdf/en.norm.pdf"
 
 
-#################################### RULES FOR TESTING ####################################
+################################## RULES FOR TESTING ##################################
 $(NAME_DB): $(OBJ_DB) $(LIBFT)
 	@$(CC) $(OBJ_DB) $(LDFLAGS) $(LDLIBS) -o $@
 	@printf "%b for debugging compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
@@ -119,7 +118,8 @@ $(TEST_DIR):
 print: re $(NAME) $(TEST_DIR)
 	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET)\n\n"
 	@./$(NAME) $(ARG) > $(TEST_DIR)/$(SIM_LOG).txt
-	@printf "See simulation logs in $(PATH_COLOR)$(TEST_DIR)/$(SIM_LOG).txt$(COLOR_RESET).\n"
+	@printf "See simulation logs in \
+	$(PATH_COLOR)$(TEST_DIR)/$(SIM_LOG).txt$(COLOR_RESET).\n"
 
 stderr: re $(NAME) $(TEST_DIR)
 	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET) to check for errors.\n\n"
@@ -137,8 +137,8 @@ valg: $(NAME_DB) $(TEST_DIR)
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(VALG_LOG).log$(COLOR_RESET).\n"
 
 hel: $(NAME_DB) $(TEST_DIR)
-	@valgrind --tool=helgrind --track-destroy=all -s --log-file=$(TEST_DIR)/$(HELG_LOG).log \
-	./$(NAME_DB) $(ARG)
+	@valgrind --tool=helgrind --track-destroy=all -s \
+	--log-file=$(TEST_DIR)/$(HELG_LOG).log ./$(NAME_DB) $(ARG)
 	@printf "\nHelgrind run concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(HELG_LOG).log$(COLOR_RESET).\n"
 
