@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 15:40:33 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 21:02:37 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_monitor	monitor(t_map *map);
 
 void		free_arr(char ***arr);
 bool		empty_flag(char *l);
-void		free_and_null(char **str);
+void		free_str(char **str);
 // void		parse_map_identifiers(t_map *map, char *line);
 void		parse_map_identifiers(t_map *map);
 void		valid_color(t_map *map, t_map_ids id, char *trmd_line);

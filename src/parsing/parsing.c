@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 15:45:34 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 21:00:48 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	monitor_loop(t_map *map, int in_map)
 	{
 		if (empty_flag(map->read_line) == true)
 		{
-			free_and_null(&map->read_line);
+			free_str(&map->read_line);
 			map->read_line = get_next_line(map->file_fd);
 			continue ;
 		}
@@ -115,7 +115,7 @@ static void	monitor_loop(t_map *map, int in_map)
 			if (in_map == 1)
 			{
 				map->one_player_per_map = read_map(map, map->read_line);
-				free_and_null(&map->read_line);
+				free_str(&map->read_line);
 				map->read_line = get_next_line(map->file_fd);
 				continue ;
 			}
@@ -126,10 +126,10 @@ static void	monitor_loop(t_map *map, int in_map)
 				// free_and_null(&map->read_line);
 			}
 		}
-		free_and_null(&map->read_line);
+		free_str(&map->read_line);
 		map->read_line = get_next_line(map->file_fd);
 	}
-	free_and_null(&map->read_line);
+	free_str(&map->read_line);
 }
 
 t_monitor	monitor(t_map *map)

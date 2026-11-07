@@ -6,29 +6,84 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 15:38:25 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/07 15:43:45 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 21:44:40 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
+// static t_id_res	rgb_validator(char **rgb)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (rgb[i] != NULL)
+// 	{
+// 		j = 0;
+// 		while (rgb[i][j] >= '0' && rgb[i][j] <= '9')
+// 			j++;
+// 		if (rgb[i][j] != '\0' || (rgb[i][j] == '\0' && j < 1))
+// 			return (ERROR);
+// 		i++;
+// 	}
+// 	return (COLOR);
+// }
 static t_id_res	rgb_validator(char **rgb)
 {
 	int	i;
 	int	j;
+	int	nr_count;
 
 	i = 0;
 	while (rgb[i] != NULL)
 	{
 		j = 0;
-		while (rgb[i][j] >= '0' && rgb[i][j] <= '9')
+		nr_count = 0;
+		while (rgb[i][j] == ' ' || rgb[i][j] == '\t')
 			j++;
-		if (rgb[i][j] != '\0' || (rgb[i][j] == '\0' && j < 1))
+		while (rgb[i][j] >= '0' && rgb[i][j] <= '9')
+		{
+			j++;
+			nr_count++;
+		}
+		while (rgb[i][j] == ' ' || rgb[i][j] == '\t')
+			j++;
+		if (rgb[i][j] != '\0' || (rgb[i][j] == '\0' && nr_count < 1))
 			return (ERROR);
 		i++;
 	}
 	return (COLOR);
 }
+
+// static t_id_res	rgb_validator(char **rgb)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*nr;
+// 	char	**nr_free;
+
+// 	i = 0;
+// 	while (rgb[i] != NULL)
+// 	{
+// 		j = 0;
+// 		nr = ft_strtrim(rgb[i], " \t");
+// 		nr_free = &nr;
+// 		while (*nr >= '0' && *nr <= '9')
+// 		{
+// 			nr++;
+// 			j++;
+// 		}
+// 		if (*nr != '\0' || (*nr == '\0' && j < 1))
+// 		{
+// 			free_str(&(*nr_free));
+// 			return (ERROR);
+// 		}
+// 		i++;
+// 		free_str(&(*nr_free));
+// 	}
+// 	return (COLOR);
+// }
 
 // TODO: do we need this function? we can just use ft_strtrim()
 // static char	*skip_to_rgb(char *str)
@@ -52,13 +107,13 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f, char *trmd_line)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_arr(&rgb);
-		free_and_null(&trmd_line);
+		free_str(&trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
 	}
 	free_arr(&rgb);
 	if (map->rgb_f_c[c_or_f - 4] != -1)
 	{
-		free_and_null(&trmd_line);
+		free_str(&trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
 	}
 	map->rgb_f_c[c_or_f - 4] = (r << 16) | (g << 8) | b;
@@ -83,23 +138,23 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f, char *trmd_line)
 
 void	valid_color(t_map *map, t_map_ids id, char *trmd_line)
 {
-	char    *rgb_str;
-	char    **rgb;
+	char	*rgb_str;
+	char	**rgb;
 
 	if ((int)id != map->next_identifier)
 	{
-		free_and_null(&trmd_line);
+		free_str(&trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
 	}
 	map->next_identifier++;
 	// rgb = ft_split(skip_to_rgb(trmd_line), ',');
 	rgb_str = ft_strtrim(map->identifier[1], " \t");
 	rgb = ft_split(rgb_str, ',');
-	free_and_null(&rgb_str);
+	free_str(&rgb_str);
 	if (rgb_validator(rgb) != COLOR || rgb[3] != NULL)
 	{
 		free_arr(&rgb);
-		free_and_null(&trmd_line);
+		free_str(&trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
 	}
 	parse_rgb(map, rgb, id, trmd_line);
@@ -111,6 +166,7 @@ void	rgb_print(t_map *map, t_map_ids id)
 	int		i;
 	char	c;
 
+	c = 0;
 	if (id == C || id == F)
 	{
 		if (id == C)
