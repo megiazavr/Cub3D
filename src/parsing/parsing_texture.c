@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 00:51:37 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 13:26:19 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ static t_id_res	rgb_validator(char **rgb)
 	return (COLOR);
 }
 
-static char	*skip_to_rgb(char *str)
-{
-	// while (*str == ' ' || *str == '\t')
-	// 	str++;
-	while (*str && *str != ' ' && *str != '\t')
-		str++;
-	while (*str == ' ' || *str == '\t')
-		str++;
-	return (str);
-}
+// TODO: do we need this function? we can just use ft_strtrim()
+// static char	*skip_to_rgb(char *str)
+// {
+// 	while (*str && *str != ' ' && *str != '\t')
+// 		str++;
+// 	while (*str == ' ' || *str == '\t')
+// 		str++;
+// 	return (str);
+// }
 
 // static void parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 // {
@@ -67,22 +66,33 @@ static char	*skip_to_rgb(char *str)
 // 	return ;
 // }
 
-static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
+static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f, char *trmd_line)
 {
 	int	r;
 	int	g;
 	int	b;
 
 	if (rgb_validator(rgb) != COLOR || rgb[3] != NULL)
+	{
+		free_split(rgb);
+		free_and_null(trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	}
 	r = ft_atoi(rgb[0]);
 	g = ft_atoi(rgb[1]);
 	b = ft_atoi(rgb[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	{
+		free_split(rgb);
+		free(trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
+	}
 	free_split(rgb);
 	if (map->rgb_f_c[c_or_f - 4] != -1)
+	{
+		free_and_null(trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
+	}
 	map->rgb_f_c[c_or_f - 4] = (r << 16) | (g << 8) | b;
 	rgb_print(map, c_or_f);
 	return ;
@@ -105,25 +115,38 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 
 static void	valid_color(t_map *map, t_map_ids id, char *trmd_line)
 {
+	char	*rgb_str;
 	char	**rgb;
 
 	if ((int)id != map->next_identifier)
+	{
+		free(trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
+	}
 	map->next_identifier++;
-	rgb = ft_split(skip_to_rgb(trmd_line), ',');
-	parse_rgb(map, rgb, id);
+	// rgb = ft_split(skip_to_rgb(trmd_line), ',');
+	rgb_str = ft_strtrim(map->identifier[1], " \t");
+	rgb = ft_split(rgb_str, ',');
+	free_and_null(rgb_str);
+	parse_rgb(map, rgb, id, trmd_line);
 	return ;
 }
 
-static void	valid_texture_path(t_map *map, t_map_ids id)
+static void	valid_texture_path(t_map *map, t_map_ids id, char *trmd_line)
 {
 	if ((int)id != map->next_identifier)
+	{
+		free_and_null(trmd_line);
 		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
+	}
 	map->next_identifier++;
 	if (map->identifier[1] && map->n_s_w_e_paths[id] == NULL)
 		map->n_s_w_e_paths[id] = map->identifier[1];
 	else
-		exit_cleanup(map, ERR_TEXTURE, ERR_MISS_DUPE_PATH);
+	{
+		free_and_null(trmd_line);
+		exit_cleanup(map, ERR_TEXTURE, ERR_DUPE_PATH_MSG);
+	}
 	return ;
 }
 
@@ -152,33 +175,45 @@ static void	valid_texture_path(t_map *map, t_map_ids id)
 static void	valid_identifier(t_map *map, char *trmd_line)
 {
 	if (map->identifier[0] == NULL)
-		exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
+	{
+		free_and_null(trmd_line);
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISS_ID_MSG);
+	}
 	if (ft_strcmp(map->identifier[0], "NO") == 0)
-		valid_texture_path(map, NO);
+		valid_texture_path(map, NO, trmd_line);
 	else if (ft_strcmp(map->identifier[0], "SO") == 0)
-		valid_texture_path(map, SO);
+		valid_texture_path(map, SO, trmd_line);
 	else if (ft_strcmp(map->identifier[0], "WE") == 0)
-		valid_texture_path(map, WE);
+		valid_texture_path(map, WE, trmd_line);
 	else if (ft_strcmp(map->identifier[0], "EA") == 0)
-		valid_texture_path(map, EA);
+		valid_texture_path(map, EA, trmd_line);
 	else if (ft_strcmp(map->identifier[0], "F") == 0)
 		valid_color(map, F, trmd_line);
 	else if (ft_strcmp(map->identifier[0], "C") == 0)
 		valid_color(map, C, trmd_line);
 	else
-		exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
+	{
+		free_and_null(trmd_line);
+		exit_cleanup(map, ERR_TEXTURE, ERR_MISS_ID_MSG);
+	}
 	return ;
 }
 
-void	parse_map_identifiers(t_map *map, char *line)
+void	parse_map_identifiers(t_map *map)
 {
 	char	*trmd_line;
 
-	trmd_line = ft_strtrim(line, " \n\t\v");
+	trmd_line = ft_strtrim(map->read_line, " \n\t\v");
+	free_and_null(map->read_line);
 	map->identifier = ft_split(trmd_line, ' ');
+	// TODO: if we want to accept file paths with spaces we'll have to split only in 2
+	// i.e. we wonly consider first sequence of spaces to divide in 2 strings
 	if (!map->identifier)
-		exit_cleanup(map, ERR_PERR, ERR_MAP_ID);
+	{
+		free_and_null(trmd_line);
+		exit_cleanup(map, ERR_PERR, ERR_MAP_ID_MSG);
+	}
 	valid_identifier(map, trmd_line);
-	free(trmd_line);
+	free_and_null(trmd_line);
 	return ;
 }

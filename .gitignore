@@ -1,0 +1,9 @@
+# Build files
+obj*/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/

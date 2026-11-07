@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 01:25:39 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 13:24:35 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 # define CUB3D_H
 
 # include <stdio.h>
-# include <unistd.h>
+# include <stdbool.h>
 # include "../libs/libft/libft.h"
 # include "cub3D_err.h"
-# include <stdbool.h>
 
 typedef enum e_monitor
 {
@@ -75,16 +74,19 @@ typedef struct s_line_node
 typedef struct s_map
 {
 	char			*file;
+	int				file_fd;
 	//char            **grid;
 	//int		        rows;
 	int				space;
 	//t_lines			lines;
+	char			*read_line;
 	char			player_dir;
 	int				player_x;
 	int				player_y;
 	int				one_player_per_map;
 	char			**identifier;
 	char			*n_s_w_e_paths[4];
+	int				fd[4];
 	int				rgb_f_c[2];
 	int				next_identifier;
 }	t_map;
@@ -93,7 +95,9 @@ t_monitor	monitor(t_map *map);
 
 void		free_split(char **arr);
 bool		empty_flag(char *l);
-void		parse_map_identifiers(t_map *map, char *line);
+void		free_and_null(char *str);
+// void		parse_map_identifiers(t_map *map, char *line);
+void		parse_map_identifiers(t_map *map);
 int			readthemap(t_map *map, char *l);
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 

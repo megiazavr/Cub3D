@@ -3,27 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 18:35:10 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/07 13:27:57 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-void free_split(char **arr)
+void	free_and_null(char *str)
+{
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
+}
+
+void	free_split(char **arr)
 {
 	int	i;
+
 	if (!arr)
 		return ;
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
 	free(arr);
 }
 
-bool empty_flag(char *l)
+bool	empty_flag(char *l)
 {
 	bool	empty;
 

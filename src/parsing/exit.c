@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 18:34:59 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/07 03:50:51 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ static void	print_err_msg(t_err_type err, char *err_msg)
 	return ;
 }
 
+static void	close_fds(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (map->fd[i] >= 0)
+			close(map->fd[i]);
+		i++;
+	}
+	if (map->file_fd >= 0)
+		close(map->file_fd);
+}
 
 void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 {
@@ -34,6 +48,8 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 
 	if (err != VALID)
 		print_err_msg(err, err_msg);
+	if (map->read_line)
+		free(map->read_line);
 	if (map->file)
 		free(map->file);
 	if (map->identifier)
@@ -46,6 +62,7 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 		}
 		free(map->identifier);
 	}
+	close_fds(map);
 	if (err != VALID)
 		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);

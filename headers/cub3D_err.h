@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/07 01:13:25 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 02:38:18 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ file path and F, C with R,G,B colors"
 # define ERR_RGB_AV_MSG		"Colors for F and C must be defined only once and \
 must be strictly formatted as 'R,G,B' e.g: 0,100,255"
 # define ERR_RGB_AV2_MSG	"R,G,B colors must be in range [0, 255]"
-# define ERR_MISSING_ID		"Map file must include identifiers at beginning of line \
+# define ERR_MISS_ID_MSG	"Map file must include identifiers at beginning of line \
 (not counting spaces): NO, SO, WE, EA, F, C"
 # define ERR_MISSING_PATH	"Each map texture identifiers must be followed by \
 its file path"
-# define ERR_MISS_DUPE_PATH	"Each map texture identifier must appear only once, \
+# define ERR_DUPE_PATH_MSG	"Each map texture identifier must appear only once, \
 be followed by its file path and there can only be spaces between them"
 # define ERR_ORDER_MSG		"Identifiers must appear in this exact order: \
 NO, SO, WE, EA, F, C"
@@ -61,6 +61,6 @@ player faces"
 
 /* Errors messages with perror() */
 # define ERR_OPEN_MSG		"Opening .cub file failed"
-# define ERR_MAP_ID			"map->identifier is NULL"
+# define ERR_MAP_ID_MSG		"map->identifier is NULL"
 
 #endif

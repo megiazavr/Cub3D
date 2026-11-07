@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/02 22:20:00 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/07 03:19:18 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ fclean: clean
 re: fclean all
 
 run: re $(NAME)
-	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET)\n\n"
+	@echo "Running $(VIOLET)./$(NAME) \"$(ARG)\"$(COLOR_RESET)\n\n"
 	@./$(NAME) $(ARG)
 
 norm:
@@ -132,7 +132,7 @@ db:
 
 valg: $(NAME_DB) $(TEST_DIR)
 	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s \
-	--log-file=$(TEST_DIR)/$(VALG_LOG).log ./$(NAME_DB) $(ARG)
+	--track-origins=yes --log-file=$(TEST_DIR)/$(VALG_LOG).log ./$(NAME_DB) $(ARG)
 	@printf "\nValgrind run concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(VALG_LOG).log$(COLOR_RESET).\n"
 
