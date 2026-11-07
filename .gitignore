@@ -1,7 +1,7 @@
 # Build files
 obj*/
 libs/*.o
-cub
+cub3D*
 
 # OS files
 .DS_Store
