@@ -1,5 +1,7 @@
 # Build files
 obj*/
+libs/*.o
+cub
 
 # OS files
 .DS_Store
