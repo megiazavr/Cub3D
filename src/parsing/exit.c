@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 03:50:51 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 14:30:58 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,12 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 
 	if (err != VALID)
 		print_err_msg(err, err_msg);
-	if (map->read_line)
-		free(map->read_line);
-	if (map->file)
-		free(map->file);
-	if (map->identifier)
-	{
-		i = 0;
-		while (map->identifier[i])
-		{
-			free(map->identifier[i]);
-			i++;
-		}
-		free(map->identifier);
-	}
+	free_and_null(&map->read_line);
+	free_and_null(&map->file);
+	free_arr(map->identifier);
+	i = 0;
+	while (i < 4)
+		free_and_null(&map->n_s_w_e_paths[i++]);
 	close_fds(map);
 	if (err != VALID)
 		exit(EXIT_FAILURE);

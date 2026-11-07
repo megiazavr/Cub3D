@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 13:24:35 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 14:35:41 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ typedef struct s_map
 
 t_monitor	monitor(t_map *map);
 
-void		free_split(char **arr);
+void		free_arr(char **arr);
 bool		empty_flag(char *l);
-void		free_and_null(char *str);
+void		free_and_null(char **str);
 // void		parse_map_identifiers(t_map *map, char *line);
 void		parse_map_identifiers(t_map *map);
-int			readthemap(t_map *map, char *l);
+int			read_map(t_map *map, char *l);
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
 // DELETE TESTER:

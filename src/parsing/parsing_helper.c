@@ -6,22 +6,22 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 13:27:57 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 14:29:31 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h"
 
-void	free_and_null(char *str)
+void	free_and_null(char **str)
 {
-	if (str)
+	if (str && *str)
 	{
-		free(str);
-		str = NULL;
+		free(*str);
+		*str = NULL;
 	}
 }
 
-void	free_split(char **arr)
+void	free_arr(char **arr)
 {
 	int	i;
 

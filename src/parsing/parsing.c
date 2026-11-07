@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 13:29:55 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 14:38:50 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	monitor_loop(t_map *map, int in_map)
 	{
 		if (empty_flag(map->read_line) == true)
 		{
-			// free_and_null(map->read_line);
+			free_and_null(&map->read_line);
 			map->read_line = get_next_line(map->file_fd);
 			continue ;
 		}
@@ -115,20 +115,22 @@ static void	monitor_loop(t_map *map, int in_map)
 		{
 			if (in_map == 1)
 			{
-				map->one_player_per_map = readthemap(map, map->read_line);
-				// free_and_null(map->read_line);
+				map->one_player_per_map = read_map(map, map->read_line);
+				free_and_null(&map->read_line);
 				map->read_line = get_next_line(map->file_fd);
 				continue ;
 			}
 			else
 			{
 				in_map = 1;
-				map->one_player_per_map = readthemap(map, map->read_line);
+				map->one_player_per_map = read_map(map, map->read_line);
+				// free_and_null(&map->read_line);
 			}
 		}
+		free_and_null(&map->read_line);
 		map->read_line = get_next_line(map->file_fd);
 	}
-	free_and_null(map->read_line);
+	free_and_null(&map->read_line);
 }
 
 /* TODO: don't forget to free(line) before any exit_cleanup()
@@ -197,23 +199,15 @@ t_monitor	monitor(t_map *map)
 {
 	// char	*line; // TODO: delete if norm adjustments are good
 	int	in_map;
-	int	i;
 
 	map->file_fd = open(map->file, O_RDONLY);
 	if (map->file_fd < 0)
 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-	map->one_player_per_map = 0;
-	map->next_identifier = 0;
+	// map->one_player_per_map = 0;
+	// map->next_identifier = 0;
 	in_map = 0;
-	i = 0;
-	while (i < 4)
-	{
-		map->n_s_w_e_paths[i] = NULL;
-		map->fd[i] = -1;
-		i++;
-	}
-	map->rgb_f_c[0] = -1;
-	map->rgb_f_c[1] = -1;
+	// map->rgb_f_c[0] = -1;
+	// map->rgb_f_c[1] = -1;
 	rgb_print(map, 0);
 	monitor_loop(map, in_map);
 	// if (map->one_player_per_map == 0)
