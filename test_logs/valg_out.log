@@ -1,39 +1,16 @@
-==563205== Memcheck, a memory error detector
-==563205== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
-==563205== Using Valgrind-3.27.0 and LibVEX; rerun with -h for copyright info
-==563205== Command: ./cub3D_db \ \ maps/f.cub\ \ \ 
-==563205== Parent PID: 563204
-==563205== 
-==563205== 
-==563205== FILE DESCRIPTORS: 3 open (3 inherited) at exit.
-==563205== 
-==563205== HEAP SUMMARY:
-==563205==     in use at exit: 226 bytes in 15 blocks
-==563205==   total heap usage: 54 allocs, 39 frees, 1,781 bytes allocated
-==563205== 
-==563205== 106 bytes in 10 blocks are indirectly lost in loss record 1 of 2
-==563205==    at 0x48A54AC: malloc (vg_replace_malloc.c:447)
-==563205==    by 0x4002957: ft_wd (in /home/mu/42Lisboa/Cub3D/cub3D_db)
-==563205==    by 0x4002ABB: ft_split_half (in /home/mu/42Lisboa/Cub3D/cub3D_db)
-==563205==    by 0x4002BEF: ft_split (in /home/mu/42Lisboa/Cub3D/cub3D_db)
-==563205==    by 0x40017EF: parse_map_identifiers (parsing_texture.c:215)
-==563205==    by 0x4000EC3: monitor_loop (parsing.c:109)
-==563205==    by 0x4001117: monitor (parsing.c:212)
-==563205==    by 0x4000D07: main (main.c:46)
-==563205== 
-==563205== 226 (120 direct, 106 indirect) bytes in 5 blocks are definitely lost in loss record 2 of 2
-==563205==    at 0x48A54AC: malloc (vg_replace_malloc.c:447)
-==563205==    by 0x4002BC3: ft_split (in /home/mu/42Lisboa/Cub3D/cub3D_db)
-==563205==    by 0x40017EF: parse_map_identifiers (parsing_texture.c:215)
-==563205==    by 0x4000EC3: monitor_loop (parsing.c:109)
-==563205==    by 0x4001117: monitor (parsing.c:212)
-==563205==    by 0x4000D07: main (main.c:46)
-==563205== 
-==563205== LEAK SUMMARY:
-==563205==    definitely lost: 120 bytes in 5 blocks
-==563205==    indirectly lost: 106 bytes in 10 blocks
-==563205==      possibly lost: 0 bytes in 0 blocks
-==563205==    still reachable: 0 bytes in 0 blocks
-==563205==         suppressed: 0 bytes in 0 blocks
-==563205== 
-==563205== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==652685== Memcheck, a memory error detector
+==652685== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==652685== Using Valgrind-3.27.0 and LibVEX; rerun with -h for copyright info
+==652685== Command: ./cub3D_db \ \ maps/f.cub\ \ \ 
+==652685== Parent PID: 652684
+==652685== 
+==652685== 
+==652685== FILE DESCRIPTORS: 3 open (3 inherited) at exit.
+==652685== 
+==652685== HEAP SUMMARY:
+==652685==     in use at exit: 0 bytes in 0 blocks
+==652685==   total heap usage: 54 allocs, 54 frees, 1,781 bytes allocated
+==652685== 
+==652685== All heap blocks were freed -- no leaks are possible
+==652685== 
+==652685== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

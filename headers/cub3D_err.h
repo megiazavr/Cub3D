@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/07 14:45:03 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 14:55:51 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ player faces"
 /* Errors messages with perror() */
 # define ERR_OPEN_MSG		"Opening .cub file failed"
 # define ERR_MAP_ID_MSG		"map->identifier is NULL"
-# define ERR_MEM_PATH_MSG	"Memory allocation for map->n_s_w_e_paths[id] failed"
+# define ERR_MEM_PATH_MSG	"malloc() for map->n_s_w_e_paths[id] failed"
 
 #endif
