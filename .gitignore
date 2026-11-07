@@ -1,6 +1,7 @@
 # Build files
 obj*/
 libs/*/*.o
+libs/*/*.a
 cub3D*
 
 # OS files
