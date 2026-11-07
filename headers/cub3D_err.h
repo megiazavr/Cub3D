@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_err.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/04 16:11:51 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/07 00:37:22 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef enum e_err_type
 }	t_err_type;
 
 /* Arguments parsing error messages */
-# define ERR_ARGS_MSG		"Arguments parsing:\n"
+# define ERR_ARGS_MSG		"Arguments parsing:"
 # define ERR_NR_ARGS		"Invalid number of arguments"
 # define ERR_ARGS_FILE_MSG	"File missing .cub extension"
 
 /* Texture parsing error messages */
-# define ERR_TEXTURE_MSG	"Texture parsing:\n"
+# define ERR_TEXTURE_MSG	"Texture parsing:"
 # define ERR_IDENTIFIER_MSG	"Use only these identifiers: NO, SO, WE, EA with \
 file path and F, C with R,G,B colors"
 # define ERR_RGB_AV_MSG		"Colors must be strictly formatted as 'R,G,B' \
@@ -49,11 +49,11 @@ e.g: 0,100,255"
 its file path"
 # define ERR_MISS_DUPE_PATH	"Each map texture identifier must appear only once, \
 be followed by its file path and there can only be spaces between them"
-# define ERR_WRONG_ORDER_MSG	"Identifiers must appear in this exact order: \
+# define ERR_ORDER_MSG		"Identifiers must appear in this exact order: \
 NO, SO, WE, EA, F, C"
 
 /* Map parsing error messages */
-# define ERR_MAP_MSG		"Map parsing:\n"
+# define ERR_MAP_MSG		"Map parsing:"
 # define ERR_PLAYER_MSG		"Use 'N', 'S', 'W', or 'E' to set orientation \
 player faces"
 # define ERR_MAP_SPACE_MSG	"Can't have 2 or more consecutive spaces"

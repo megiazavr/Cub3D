@@ -6,31 +6,28 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 23:38:14 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 00:34:51 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub3D.h" // bring in t_map, t_map_ids, prototypes, error enums
 
-static char	*rgb_validator(char *str)
+static t_id_res	rgb_validator(char **rgb)
 {
-	while (*str == ' ' || *str == '\t')
-		str++;
-	while (*str != '\0')
+	int	i;
+	int	j;
+
+	i = 0;
+	while (rgb[i] != NULL)
 	{
-		if (*str >= '0' && *str <= '9')
-			str++;
-		else if (*str == ' ' || *str == '\t')
-		{
-			while (*str == ' ' || *str == '\t')
-				str++;
-			if (*str != '\0')
-				return (NULL);
-		}
-		else
-			return (NULL);
+		j = 0;
+		while (rgb[i][j] >= '0' && rgb[i][j] <= '9')
+			j++;
+		if (rgb[i][j] != '\0' || (rgb[i][j] == '\0' && j < 1))
+			return (ERROR);
+		i++;
 	}
-	return (str);
+	return (COLOR);
 }
 
 static char	*skip_to_rgb(char *str)
@@ -76,10 +73,8 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 	int	g;
 	int	b;
 
-	if (rgb[0] == NULL || rgb[1] == NULL || rgb[2] == NULL || rgb[3] != NULL)
+	if (rgb_validator(rgb) != COLOR || rgb[3] != NULL)
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
-	if (!rgb_validator(rgb[0]) || !rgb_validator(rgb[1]) || !rgb_validator(rgb[2]))
-		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV2_MSG);
 	r = ft_atoi(rgb[0]);
 	g = ft_atoi(rgb[1]);
 	b = ft_atoi(rgb[2]);
@@ -119,7 +114,7 @@ static void	valid_color(t_map *map, t_map_ids id, char *trmd_line)
 	char	**rgb;
 
 	if ((int)id != map->next_identifier)
-		exit_cleanup(map, ERR_TEXTURE, ERR_WRONG_ORDER_MSG);
+		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
 	map->next_identifier++;
 	rgb = ft_split(skip_to_rgb(trmd_line), ',');
 	parse_rgb(map, rgb, id);
@@ -129,7 +124,7 @@ static void	valid_color(t_map *map, t_map_ids id, char *trmd_line)
 static void	valid_texture_path(t_map *map, t_map_ids id)
 {
 	if ((int)id != map->next_identifier)
-		exit_cleanup(map, ERR_TEXTURE, ERR_WRONG_ORDER_MSG);
+		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
 	map->next_identifier++;
 	if (map->identifier[1] && map->n_s_w_e_paths[id] == NULL)
 		map->n_s_w_e_paths[id] = map->identifier[1];

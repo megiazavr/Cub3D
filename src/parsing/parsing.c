@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 23:38:14 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/06 23:35:29 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,22 +154,11 @@ t_monitor monitor(t_map *map)
 	return (MAP);
 }
 */
-// void	print_bits(unsigned char octet)
-// {
-// 	unsigned char bit_mask;
-// 	int i = 7;
-
-// 	while (i >= 0)
-// 	{
-// 		bit_mask = (octet >> i & 1) + '0';
-// 		write(1, &bit_mask, 1);
-// 		i--;
-// 	}
-// }
 
 void	rgb_print(t_map *map)
 {
-	int	i;
+	int		i;
+	char	c;
 
 	i = 0;
 	while (i < 2)
@@ -186,7 +175,12 @@ void	rgb_print(t_map *map)
 		// 	ft_putstr_fd("Blue: ", STDOUT_FILENO);
 		// print_bits(map->rgb_c_f[i] + '0');
 		// ft_putchar_fd('\n', STDOUT_FILENO);
-		printf("array index is %d for color %d)\n",i, map->rgb_f_c[i]);
+		if (i == F - 4)
+			c = 'F';
+		else if (i == C - 4)
+			c = 'C';
+		printf("array index is %d for ID %c, color is %d)\n",
+			i, c, map->rgb_f_c[i]);
 		i++;
 	}
 	printf("\n");
@@ -208,12 +202,9 @@ t_monitor	monitor(t_map *map)
 	i = 0;
 	while (i < 4)
 		map->n_s_w_e_paths[i++] = NULL;
-	i = 0;
-	while (i < 2)
-		map->rgb_f_c[i++] = -1;
+	map->rgb_f_c[0] = -1;
+	map->rgb_f_c[1] = -1;
 	rgb_print(map);
-	// map->rgb_c_f[C] = -1;
-	// map->rgb_c_f[F] = -1;
 	monitor_loop(map, fd, in_map);
 	// if (map->one_player_per_map == 0)
 	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);

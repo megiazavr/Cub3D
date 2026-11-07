@@ -6,30 +6,32 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 23:41:35 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/06 23:17:34 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include "../library/libft/libft.h"
-#include "cub3D_err.h"
-#include <stdbool.h>
+# include <stdio.h>
+# include <unistd.h>
+# include "../library/libft/libft.h"
+# include "cub3D_err.h"
+# include <stdbool.h>
 
-typedef enum e_monitor {
-    CONFIG,
-    MAP
+typedef enum e_monitor
+{
+	CONFIG,
+	MAP
 }	t_monitor;
 
-typedef enum e_player {
+typedef enum e_player
+{
 	N,
 	S,
 	W,
 	E
-} t_player;
+}	t_player;
 
 typedef enum e_map_ids
 {
@@ -74,7 +76,7 @@ typedef struct s_map {
 	char            *file;
 	//char            **grid;
 	//int		        rows;
-	int		        space;
+	int				space;
 	//t_lines			lines;
 	char			player_dir;
 	int				player_x;
@@ -88,14 +90,14 @@ typedef struct s_map {
 
 t_monitor	monitor(t_map *map);
 
-void free_split(char **arr);
-bool empty_flag(char *l);
-void	parse_map_identifiers(t_map *map, char *line);
-int readthemap(t_map *map, char *l);
-void	exit_cleanup(t_map *map, t_err_type err, char *err_msg);
+void		free_split(char **arr);
+bool		empty_flag(char *l);
+void		parse_map_identifiers(t_map *map, char *line);
+int			readthemap(t_map *map, char *l);
+void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
 // DELETE TESTER:
-void	rgb_print(t_map *map);
+void		rgb_print(t_map *map);
 
 
 #endif
