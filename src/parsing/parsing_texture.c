@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 00:34:51 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 00:51:37 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,7 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 	if (map->rgb_f_c[c_or_f - 4] != -1)
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
 	map->rgb_f_c[c_or_f - 4] = (r << 16) | (g << 8) | b;
-	char	c_or_f_char;
-	if (c_or_f == C)
-		c_or_f_char = 'C';
-	else if (c_or_f == F)
-		c_or_f_char = 'F';
-	ft_printf(">> Results after parse_rgb() for identifier %c:\n", c_or_f_char);
-	rgb_print(map);
+	rgb_print(map, c_or_f);
 	return ;
 }
 

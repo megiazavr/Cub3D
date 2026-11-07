@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/06 23:17:34 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 01:25:39 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include "../library/libft/libft.h"
+# include "../libs/libft/libft.h"
 # include "cub3D_err.h"
 # include <stdbool.h>
 
@@ -72,8 +72,9 @@ typedef struct s_line_node
 // }	t_lines;
 
 
-typedef struct s_map {
-	char            *file;
+typedef struct s_map
+{
+	char			*file;
 	//char            **grid;
 	//int		        rows;
 	int				space;
@@ -97,7 +98,6 @@ int			readthemap(t_map *map, char *l);
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
 // DELETE TESTER:
-void		rgb_print(t_map *map);
-
+void		rgb_print(t_map *map, t_map_ids id);
 
 #endif

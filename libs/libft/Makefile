@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncruz-ne <ncruz-ne@student.42.fr>          +#+  +:+       +#+         #
+#    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/16 18:43:47 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/05/20 17:45:08 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/09/17 19:39:53 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJS = ft_printf.o ft_printf_hex.o ft_printf_ptr.o ft_putnbr_fd_len.o \
 	ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o ft_isascii.o \
 	ft_isdigit.o ft_isprint.o ft_isspace.o ft_itoa.o ft_memchr.o ft_memcmp.o \
 	ft_memcpy.o ft_memmove.o ft_memset.o ft_putchar_fd.o ft_putendl_fd.o \
-	ft_putnbr_fd.o ft_putstr_fd.o ft_split.o ft_strchr.o ft_strdup.o \
+	ft_putnbr_fd.o ft_putstr_fd.o ft_split.o ft_split_mult.o ft_strchr.o ft_strdup.o \
 	ft_striteri.o ft_strjoin.o ft_strlcat.o ft_strlcpy.o ft_strlen.o ft_strmapi.o \
 	ft_strncmp.o ft_strcmp.o ft_strnstr.o ft_strrchr.o ft_strtrim.o ft_substr.o \
 	ft_tolower.o ft_toupper.o ft_lstadd_back.o ft_lstadd_front.o \

@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/06 23:35:29 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/07 00:54:25 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,19 @@ t_monitor monitor(t_map *map)
 }
 */
 
-void	rgb_print(t_map *map)
+void	rgb_print(t_map *map, t_map_ids id)
 {
 	int		i;
 	char	c;
 
+	if (id == C || id == F)
+	{
+		if (id == C)
+			c = 'C';
+		else if (id == F)
+			c = 'F';
+		ft_printf(">> Results after parse_rgb() for identifier %c:\n", c);
+	}
 	i = 0;
 	while (i < 2)
 	{
@@ -204,7 +212,7 @@ t_monitor	monitor(t_map *map)
 		map->n_s_w_e_paths[i++] = NULL;
 	map->rgb_f_c[0] = -1;
 	map->rgb_f_c[1] = -1;
-	rgb_print(map);
+	rgb_print(map, 0);
 	monitor_loop(map, fd, in_map);
 	// if (map->one_player_per_map == 0)
 	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
