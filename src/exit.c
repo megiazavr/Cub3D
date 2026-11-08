@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 01:28:33 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:12:39 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub3D.h"
+#include "../include/cub3D.h"
 
 void	free_str(char **str)
 {
