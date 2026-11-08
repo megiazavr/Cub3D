@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/08 19:56:18 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/08 19:59:20 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIBS_DIR	= ./libs
 LIBFT		= $(LIBS_DIR)/libft/libft.a
 
 CC			= cc
-CPPFLAGS	= -Iheaders
+CPPFLAGS	= -Iinclude
 CFLAGS		= -Wall -Wextra -Werror
 LDFLAGS		= -L$(LIBS_DIR)/libft
 LDLIBS		= -lft
