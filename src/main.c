@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 01:26:54 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:09:45 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub3D.h"
+#include "../include/cub3D.h"
 
 static t_map	init_map(void)
 {

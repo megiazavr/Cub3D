@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 01:28:11 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:10:03 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3D.h" // bring in t_map, t_map_ids, prototypes, error enums
+#include "../../include/cub3D.h" // bring in t_map, t_map_ids, prototypes, error enums
 
 static void	valid_texture_path(t_map *map, t_map_ids id)
 {

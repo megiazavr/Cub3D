@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 15:38:25 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/08 01:17:16 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:09:51 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3D.h"
+#include "../../include/cub3D.h"
 
 // static t_id_res	rgb_validator(char **rgb)
 // {

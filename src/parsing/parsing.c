@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 21:00:48 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:10:08 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3D.h" // bring in t_map, t_id_res, prototypes, error enums
+#include "../../include/cub3D.h" // bring in t_map, t_id_res, prototypes, error enums
 
 static t_id_res	identifiers_done(t_map *map)
 {

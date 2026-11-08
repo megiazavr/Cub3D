@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 15:23:37 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:09:39 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3D.h"
+#include "../../include/cub3D.h"
 
 bool	empty_flag(char *l)
 {
