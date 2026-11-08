@@ -130,8 +130,8 @@ R       G       B
 0xFF8040
 ```
 
-So `RGB(255, 128, 64)` is represented as **`0xFF8040`**, as described in `README.md`.
-So the resulting integer represents the color `RGB(255, 128, 64)`. The `[0,255]` validation ensures each component fits exactly within its 8-bit section. Each color component uses 8 bits and our resulting color will total 24 bits.
+So `RGB(255, 128, 64)` is represented as **`0xFF8040`**.
+The `[0,255]` validation ensures each component fits exactly within its 8-bit section. Each color component uses 8 bits and our resulting color will total 24 bits.
 
 At 42 campus, the systems we use to work and evaluate our projects, an `int` has **32 bits**. The packed color uses only the lower 24 bits, the remaining 8 bits of the 32-bit `int` are unused:
 
