@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/07 15:38:44 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/08 19:56:18 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c) $(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
-HEADERS 	= $(addprefix headers/, cub3D.h cub3D_err.h)
+HEADERS 	= $(addprefix include/, cub3D.h cub3D_err.h)
 
 LIBS_DIR	= ./libs
 LIBFT		= $(LIBS_DIR)/libft/libft.a
