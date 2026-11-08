@@ -142,7 +142,13 @@ At 42 campus, the systems we use to work and evaluate our projects, an `int` has
 +----------------+-----------+-----------+-----------+
 ```
 
-Read more in [RGB Representation as an Integer in Java](https://www.baeldung.com/java-rgb-color-representation)
+Read more:
+- [Convert the given RGB color code to Hex color code](https://www.geeksforgeeks.org/dsa/convert-the-given-rgb-color-code-to-hex-color-code/)
+- [RGB Representation as an Integer in Java](https://www.baeldung.com/java-rgb-color-representation)
+
+##### Flood-fill
+
+[NAME](LINK)
 
 ### Additional great resources
 
