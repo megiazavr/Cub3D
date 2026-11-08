@@ -6,13 +6,13 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 20:10:08 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 22:58:46 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h" // bring in t_map, t_id_res, prototypes, error enums
 
-static t_id_res	identifiers_done(t_map *map)
+static t_id_res	config_done(t_map *map)
 {
 	int	i;
 
@@ -90,6 +90,33 @@ static t_id_res	identifiers_done(t_map *map)
 // 	return (DONE);
 // }
 
+static void	parse_map(t_map *map, int in_map)
+{
+	while (map->read_line != NULL)
+	{
+		if (empty_flag(map->read_line) == true)
+		{
+			free_str(&map->read_line);
+			map->read_line = get_next_line(map->file_fd);
+			continue ;
+		}
+		if (in_map == 1)
+		{
+			map->one_player_per_map = read_map(map, map->read_line);
+			free_str(&map->read_line);
+			map->read_line = get_next_line(map->file_fd);
+			continue ;
+		}
+		else
+		{
+			in_map = 1;
+			map->one_player_per_map = read_map(map, map->read_line);
+			// free_str(&map->read_line);
+		}
+	}
+	return ;
+}
+
 static void	monitor_loop(t_map *map, int in_map)
 {
 	t_id_res	res;
@@ -103,33 +130,33 @@ static void	monitor_loop(t_map *map, int in_map)
 			map->read_line = get_next_line(map->file_fd);
 			continue ;
 		}
-		res = identifiers_done(map);
+		res = config_done(map);
 		if (res == PENDING)
-			parse_map_identifiers(map);
-		// if (res == COLOR)
-		// 	parseconfig(map, line);
+			parse_map_config(map);
 		else if (res == ERROR) // TODO: do we reach here? 
 			exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
 		else if (res == DONE)
-		{
-			if (in_map == 1)
-			{
-				map->one_player_per_map = read_map(map, map->read_line);
-				free_str(&map->read_line);
-				map->read_line = get_next_line(map->file_fd);
-				continue ;
-			}
-			else
-			{
-				in_map = 1;
-				map->one_player_per_map = read_map(map, map->read_line);
-				// free_and_null(&map->read_line);
-			}
-		}
+			parse_map(map, in_map);
+		// {
+		// 	if (in_map == 1)
+		// 	{
+		// 		map->one_player_per_map = read_map(map, map->read_line);
+		// 		free_str(&map->read_line);
+		// 		map->read_line = get_next_line(map->file_fd);
+		// 		continue ;
+		// 	}
+		// 	else
+		// 	{
+		// 		in_map = 1;
+		// 		map->one_player_per_map = read_map(map, map->read_line);
+		// 		// free_str(&map->read_line);
+		// 	}
+		// }
 		free_str(&map->read_line);
 		map->read_line = get_next_line(map->file_fd);
 	}
 	free_str(&map->read_line);
+	return ;
 }
 
 t_monitor	monitor(t_map *map)
@@ -139,7 +166,7 @@ t_monitor	monitor(t_map *map)
 	map->file_fd = open(map->file, O_RDONLY);
 	if (map->file_fd < 0)
 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-	in_map = 0;
+	in_map = 0; // TODO: confirm if we need var in this function
 	rgb_print(map, 0);
 	monitor_loop(map, in_map);
 	// if (map->one_player_per_map == 0)

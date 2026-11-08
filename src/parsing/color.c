@@ -6,29 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 15:38:25 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/08 20:09:51 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 22:28:13 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
-
-// static t_id_res	rgb_validator(char **rgb)
-// {
-// 	int	i;
-// 	int	j;
-//
-// 	i = 0;
-// 	while (rgb[i] != NULL)
-// 	{
-// 		j = 0;
-// 		while (rgb[i][j] >= '0' && rgb[i][j] <= '9')
-// 			j++;
-// 		if (rgb[i][j] != '\0' || (rgb[i][j] == '\0' && j < 1))
-// 			return (ERROR);
-// 		i++;
-// 	}
-// 	return (COLOR);
-// }
 
 static t_id_res	rgb_validator(char **rgb)
 {
@@ -43,11 +25,9 @@ static t_id_res	rgb_validator(char **rgb)
 		digits = 0;
 		while (rgb[i][j] == ' ' || rgb[i][j] == '\t')
 			j++;
-		while (rgb[i][j] >= '0' && rgb[i][j] <= '9')
-		{
-			j++;
+		while (rgb[i][j + digits] >= '0' && rgb[i][j + digits] <= '9')
 			digits++;
-		}
+		j = j + digits;
 		while (rgb[i][j] == ' ' || rgb[i][j] == '\t')
 			j++;
 		if (rgb[i][j] != '\0' || (rgb[i][j] == '\0' && digits < 1))
@@ -56,16 +36,6 @@ static t_id_res	rgb_validator(char **rgb)
 	}
 	return (COLOR);
 }
-
-// TODO: do we need this function? we can just use ft_strtrim()
-// static char	*skip_to_rgb(char *str)
-// {
-// 	while (*str && *str != ' ' && *str != '\t')
-// 		str++;
-// 	while (*str == ' ' || *str == '\t')
-// 		str++;
-// 	return (str);
-// }
 
 static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 {
@@ -89,21 +59,6 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 	return ;
 }
 
-// static void valid_color(t_map *map, t_map_ids id)
-// {
-// 	char **rgb;
-//
-// 	rgb = ft_split(map->identifier[1], ',');
-// 	if (rgb && rgb[3] == NULL && rgb[0] && rgb[1] && rgb[2])
-// 		parse_rgb(map, rgb, id);
-// 	else
-// 	{
-// 		free_split(rgb);
-// 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
-// 	}
-// 	return ;
-// }
-
 void	valid_color(t_map *map, t_map_ids id)
 {
 	char	*rgb_str;
@@ -124,6 +79,7 @@ void	valid_color(t_map *map, t_map_ids id)
 	return ;
 }
 
+// TODO: delete tester
 void	rgb_print(t_map *map, t_map_ids id)
 {
 	int		i;

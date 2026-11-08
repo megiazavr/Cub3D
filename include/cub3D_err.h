@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:16:05 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/08 20:09:27 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:14:10 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef enum e_err_type
 	ERR_PERR
 }	t_err_type;
 
+// TODO: Review error msgs that aren't used to delete from header
 /* Arguments parsing error messages */
 # define ERR_ARGS_MSG		"Arguments parsing:"
 # define ERR_NR_ARGS		"Invalid number of arguments"

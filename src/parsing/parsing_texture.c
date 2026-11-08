@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 20:10:03 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 22:48:32 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	valid_identifier(t_map *map, char *trmd_line)
 	return ;
 }
 
-void	parse_map_identifiers(t_map *map)
+void	parse_map_config(t_map *map)
 {
 	char	*trmd_line;
 	size_t	i;

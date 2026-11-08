@@ -6,15 +6,13 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 01:24:18 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 22:49:21 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
-# include <stdbool.h>
 # include "../libs/libft/libft.h"
 # include "cub3D_err.h"
 
@@ -95,8 +93,7 @@ t_monitor	monitor(t_map *map);
 void		free_arr(char ***arr);
 bool		empty_flag(char *l);
 void		free_str(char **str);
-// void		parse_map_identifiers(t_map *map, char *line);
-void		parse_map_identifiers(t_map *map);
+void		parse_map_config(t_map *map);
 void		valid_color(t_map *map, t_map_ids id);
 int			read_map(t_map *map, char *l);
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
