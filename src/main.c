@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 14:51:35 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 01:26:54 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static t_map	init_map(void)
 		map.n_s_w_e_paths[i] = NULL;
 		i++;
 	}
+	map.identifier[0] = NULL;
+	map.identifier[1] = NULL;
 	map.rgb_f_c[0] = -1;
 	map.rgb_f_c[1] = -1;
 	return (map);

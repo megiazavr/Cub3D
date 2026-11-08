@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/07 21:00:50 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 01:28:33 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 		print_err_msg(err, err_msg);
 	free_str(&map->read_line);
 	free_str(&map->file);
-	free_arr(&map->identifier);
+	free_str(&map->identifier[0]);
+	free_str(&map->identifier[1]);
 	i = 0;
 	while (i < 4)
 		free_str(&map->n_s_w_e_paths[i++]);
