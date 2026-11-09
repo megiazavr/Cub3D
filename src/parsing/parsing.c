@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 22:58:46 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/09 19:25:12 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h" // bring in t_map, t_id_res, prototypes, error enums
-
+#include "../../include/cub3D.h" 
 static t_id_res	config_done(t_map *map)
 {
 	int	i;
@@ -90,8 +89,65 @@ static t_id_res	config_done(t_map *map)
 // 	return (DONE);
 // }
 
+static void	count_map_rows(t_map *map)
+{
+	t_id_res	res;
+
+	map->read_line = get_next_line(map->file_fd);
+	while (map->read_line != NULL)
+	{
+		if (empty_flag(map->read_line) == true)
+		{
+			free_str(&map->read_line);
+			map->read_line = get_next_line(map->file_fd);
+			continue ;
+		}
+		res = config_done(map);
+		if (res == PENDING)
+			parse_map_config(map);
+		else if (res == ERROR)
+			exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
+		else if (res == DONE)
+			map->rows++;
+		free_str(&map->read_line);
+		map->read_line = get_next_line(map->file_fd);
+	}
+}
+
+// static void	parse_map(t_map *map, int in_map)
+// {
+// 	while (map->read_line != NULL)
+// 	{
+// 		if (empty_flag(map->read_line) == true)
+// 		{
+// 			//free_str(&map->read_line);
+// 			map->read_line = get_next_line(map->file_fd);
+// 			continue ;
+// 		}
+// 		if (in_map == 1)
+// 		{
+// 			map->one_player_per_map = read_map(map, map->read_line);
+// 			//map->row_y++;
+// 			//free_str(&map->read_line);
+// 			map->read_line = get_next_line(map->file_fd);
+// 			continue ;
+// 		}
+// 		else
+// 		{
+// 			in_map = 1;
+// 			map->one_player_per_map = read_map(map, map->read_line);
+// 			//map->row_y++;
+// 			// free_str(&map->read_line);
+// 		}
+// 	}
+// 	return ;
+// }
+
 static void	parse_map(t_map *map, int in_map)
 {
+	int	i;
+
+	i = 0;
 	while (map->read_line != NULL)
 	{
 		if (empty_flag(map->read_line) == true)
@@ -103,7 +159,8 @@ static void	parse_map(t_map *map, int in_map)
 		if (in_map == 1)
 		{
 			map->one_player_per_map = read_map(map, map->read_line);
-			free_str(&map->read_line);
+			map->matrix[i++] = map->read_line;
+			map->rows++;
 			map->read_line = get_next_line(map->file_fd);
 			continue ;
 		}
@@ -111,7 +168,8 @@ static void	parse_map(t_map *map, int in_map)
 		{
 			in_map = 1;
 			map->one_player_per_map = read_map(map, map->read_line);
-			// free_str(&map->read_line);
+			map->matrix[i++] = map->read_line;
+			map->read_line = get_next_line(map->file_fd);
 		}
 	}
 	return ;
@@ -159,16 +217,46 @@ static void	monitor_loop(t_map *map, int in_map)
 	return ;
 }
 
+
+// t_monitor	monitor(t_map *map)
+// {
+// 	int	in_map;
+//
+// 	map->file_fd = open(map->file, O_RDONLY);
+// 	if (map->file_fd < 0)
+// 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
+// 	in_map = 0; // TODO: confirm if we need var in this function
+// 	rgb_print(map, 0);
+// 	monitor_loop(map, in_map);
+// 	// if (map->one_player_per_map == 0)
+// 	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
+// 	return (MAP);
+// }
+
+//TODO: this function isn't doing much, it's always returning map. We need to check inside the main if there is a map in the end and if not - return an error?
 t_monitor	monitor(t_map *map)
 {
-	int	in_map;
+	int	i;
 
 	map->file_fd = open(map->file, O_RDONLY);
 	if (map->file_fd < 0)
 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-	in_map = 0; // TODO: confirm if we need var in this function
+	count_map_rows(map);
+	close(map->file_fd);
+	i = 0;
+	while (i < 4)
+		free_str(&map->n_s_w_e_paths[i++]);
+	map->rgb_f_c[0] = -1;
+	map->rgb_f_c[1] = -1;
+	map->next_identifier = 0;
+	map->matrix = malloc(sizeof(char *) * map->rows);
+	if (!map->matrix)
+		exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
+	map->file_fd = open(map->file, O_RDONLY);
+	if (map->file_fd < 0)
+		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
 	rgb_print(map, 0);
-	monitor_loop(map, in_map);
+	monitor_loop(map, 0);
 	// if (map->one_player_per_map == 0)
 	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
 	return (MAP);

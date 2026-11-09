@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 22:49:21 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/09 17:21:23 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ typedef enum e_id_res
 	COLOR
 }	t_id_res;
 
-typedef struct s_line_node
-{
-	char				*line;
-	struct s_line_node	*next;
-}	t_line_node;
+// typedef struct s_line_node
+// {
+// 	char				*line;
+// 	struct s_line_node	*next;
+// }	t_line_node;
 
 // typedef struct s_lines
 // {
@@ -70,21 +70,21 @@ typedef struct s_line_node
 
 typedef struct s_map
 {
-	char			*file;
-	int				file_fd;
-	//char            **grid;
-	//int		        rows;
-	int				space;
-	//t_lines			lines;
-	char			*read_line;
+	char 			**matrix;
+	int				rows;
+	int				column_x;
+	int				row_y;
 	char			player_dir;
-	int				player_x;
-	int				player_y;
 	int				one_player_per_map;
 	char			*identifier[2];
 	char			*n_s_w_e_paths[4];
 	int				fd[4];
 	int				rgb_f_c[2];
+	char			*file;
+	int				file_fd;
+	int				space;
+	//t_lines			lines;
+	char			*read_line;
 	int				next_identifier;
 }	t_map;
 

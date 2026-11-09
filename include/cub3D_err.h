@@ -64,5 +64,6 @@ player faces"
 # define ERR_OPEN_MSG		"Opening .cub file failed"
 # define ERR_MAP_ID_MSG		"map->identifier is NULL"
 # define ERR_MEM_PATH_MSG	"malloc() for map->n_s_w_e_paths[id] failed"
+# define ERR_MEM_MATRIX_MSG	"malloc() for map->matrix failed"
 
 #endif

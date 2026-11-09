@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/11/08 20:09:45 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/09 18:31:57 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int	main(int ac, char **av)
 	if (len < 4 || ft_strcmp(map.file + len - 4, ".cub") != 0)
 		exit_cleanup(&map, ERR_ARGS, ERR_ARGS_FILE_MSG);
 	monitor(&map);
+	// if (map->rows == 0)
+	// 	exit_cleanup(map, ERR_MAP, //TOFDO: add the err message if there is no map 
 	exit_cleanup(&map, VALID, NULL);
 }
