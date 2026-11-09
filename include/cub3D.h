@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/09 17:21:23 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/09 20:00:47 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef enum e_id_res
 typedef struct s_map
 {
 	char 			**matrix;
+	int				rows_until_map;
 	int				rows;
 	int				column_x;
 	int				row_y;

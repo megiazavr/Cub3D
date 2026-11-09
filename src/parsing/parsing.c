@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/09 19:56:17 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/09 20:00:30 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,12 @@ static void	parse_map(t_map *map, int in_map)
 
 	i = 0;
 	curr_file_row = 0;
-	open(map->file_fd);
+	map->matrix = malloc(sizeof(char *) * map->rows);
+	if (!map->matrix)
+		exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
+	map->file_fd = open(map->file, O_RDONLY);
+	if (map->file_fd < 0)
+		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
 	while (map->read_line != NULL)
 	{
 		while (curr_file_row < map->rows_until_map)
@@ -211,6 +216,7 @@ static void	monitor_loop(t_map *map, int in_map)
 			if (res == DONE && first_open == true)
 			{
 				count_map_rows(map);
+				close(map->file_fd);
 				first_open = false;
 			}
 			if (res == DONE && first_open == false)
@@ -292,7 +298,6 @@ t_monitor	monitor(t_map *map)
 	map->file_fd = open(map->file, O_RDONLY);
 	if (map->file_fd < 0)
 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-	in_map = 0; // TODO: confirm if we need var in this function
 	rgb_print(map, 0);
 	monitor_loop(map, in_map);
 	// if (map->one_player_per_map == 0)
