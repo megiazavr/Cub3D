@@ -45,7 +45,7 @@ Introducing invalid arguments to run the program will cause it to return with `E
 
 `philo` will only run successfully if there are **4** or **5** arguments, with all of them being **positive integers** (from `1` to `INT_MAX` = **2147483647** for 32-bit integers), except for `number_of_times_each_philosopher_must_eat` that can be set to `0` — which will mean it will not be considered for the simulation.
 
-When using `make run`, user must update the `ARG` variable in `Makefile` directly or the individual variables that compose `ARG`:
+When using `make run`, user must update the `ARG` variable in `Makefile`:
 
 ``` Makefile
 ARG = "path dir/map filename.cub"
@@ -82,6 +82,10 @@ The simulation log filename can also be defined in `Makefile` under `SIM_LOG`.
   - [write](https://man7.org/linux/man-pages/man2/write.2.html)
 
 ### Important concepts
+
+#### Raycasting
+
+
 
 #### RGB repsentation as an integer (32-bits)
 
