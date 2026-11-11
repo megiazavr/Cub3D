@@ -85,7 +85,7 @@ The simulation log filename can also be defined in `Makefile` under `SIM_LOG`.
 
 #### Raycasting
 
-[NAME](LINK)
+[Make Your Own Raycaster Part 1 by 3DSage @ YouTube](https://www.youtube.com/watch?v=gYRrGTC7GtA)
 
 #### RGB repsentation as an integer (32-bits)
 
