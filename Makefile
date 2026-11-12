@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/12 00:33:17 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/12 00:39:53 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ $(MLX):
 		cd $(LIBS_DIR) && git clone https://github.com/42paris/minilibx-linux.git; \
 	fi
 	@cd $(MLX_DIR) && ./configure
+	@$(MAKE) -C "$(MLX_DIR)"
 	@echo "\n$(MLX) compiled.\n"
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
@@ -96,9 +97,7 @@ clean:
 	@$(RM) $(OBJ)
 	@$(RM) -r $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@if [ ! -d $(MLX_DIR) ]; then \
-		$(MAKE) -C $(MLX_DIR) clean;
-	fi
+	$(MAKE) -C $(MLX_DIR) clean;
 	@printf "$(INFO)All object files removed.$(COLOR_RESET)\n"
 
 fclean: clean
