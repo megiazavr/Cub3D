@@ -6,34 +6,62 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/21 23:08:05 by megi              #+#    #+#             */
-/*   Updated: 2026/11/02 23:28:10 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/08 20:12:39 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/cub3D.h"
+#include "../include/cub3D.h"
+
+void	free_str(char **str)
+{
+	if (str && *str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
+
+void	free_arr(char ***arr)
+{
+	int	i;
+
+	if (!arr || !*arr)
+		return ;
+	i = 0;
+	while ((*arr)[i])
+		free_str(&(*arr)[i++]);
+	free(*arr);
+	*arr = NULL;
+}
 
 static void	print_err_msg(t_err_type err, char *err_msg)
 {
-	ft_putendl_fd("Error", STDOUT_FILENO);
 	ft_putendl_fd("Error", STDERR_FILENO);
 	if (err == ERR_TEXTURE)
-	{
-		ft_putendl_fd(ERR_TEXTURE_MSG, STDOUT_FILENO);
 		ft_putendl_fd(ERR_TEXTURE_MSG, STDERR_FILENO);
-	}
 	else if (err == ERR_MAP)
-	{
-		ft_putendl_fd(ERR_MAP_MSG, STDOUT_FILENO);
 		ft_putendl_fd(ERR_MAP_MSG, STDERR_FILENO);
-	}
 	if (err == ERR_PERR)
 		perror(err_msg);
 	else
 		ft_putendl_fd(err_msg, STDERR_FILENO);
-	ft_putendl_fd(err_msg, STDOUT_FILENO);
 	return ;
 }
-/* TODO: confirm if we need error msgs in stdout and stdin, and perror() */
+
+static void	close_fds(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (map->fd[i] >= 0)
+			close(map->fd[i]);
+		i++;
+	}
+	if (map->file_fd >= 0)
+		close(map->file_fd);
+}
 
 void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 {
@@ -41,18 +69,14 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 
 	if (err != VALID)
 		print_err_msg(err, err_msg);
-	if (map->file)
-		free(map->file);
-	if (map->identifier)
-	{
-		i = 0;
-		while (map->identifier[i])
-		{
-			free(map->identifier[i]);
-			i++;
-		}
-		free(map->identifier);
-	}
+	free_str(&map->read_line);
+	free_str(&map->file);
+	free_str(&map->identifier[0]);
+	free_str(&map->identifier[1]);
+	i = 0;
+	while (i < 4)
+		free_str(&map->n_s_w_e_paths[i++]);
+	close_fds(map);
 	if (err != VALID)
 		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);

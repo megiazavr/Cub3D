@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/02 22:20:00 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/12 00:07:55 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,22 +18,26 @@ OBJ_DIR 	= obj
 OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
-				parsing_helper.c exit.c read_map.c)
-SRC			= $(addprefix $(SRC_DIR)/, main.c) \
-				$(PARSING_SRC)
+				parsing_helper.c color.c read_map.c)
+SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c) $(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
-HEADERS 	= $(addprefix headers/, cub3D.h cub3D_err.h)
+HEADERS 	= $(addprefix include/, cub3D.h cub3D_err.h)
 
-LIBS_DIR	= ./libs
+LIBS_DIR	= /libs
+LIBFT_DIR	= $(LIBS_DIR)/libft
 LIBFT		= $(LIBS_DIR)/libft/libft.a
+MLX_DIR		= $(LIBS_DIR)/minilibx-linux
+MLX			= $(MLX_DIR)/libmlx_Linux.a
 
 CC			= cc
-CPPFLAGS	= -Iheaders
+CPPFLAGS	= -Iinclude -I$(LIBFT_DIR) -I$(MLX_DIR) -O3
 CFLAGS		= -Wall -Wextra -Werror
-LDFLAGS		= -L$(LIBS_DIR)/libft
-LDLIBS		= -lft
+# LDFLAGS		= -L$(LIBS_DIR)/libft
+# LDLIBS		= -lft
+LIBFT_FLAGS	= -L$(LIBFT_DIR) -lft
+MLX_FLAGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 DB_FLAGS	= -g
 
 RM 			= rm -f
@@ -67,14 +71,23 @@ PATH_COLOR      := $(ESC)[38;2;221;160;221m
 
 
 all: $(NAME)
+	@echo "$(NAME) is ready to run.\n"
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $@
+$(NAME): $(LIBFT) $(MLX) $(OBJ)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(MLX_FLAGSS) -o $@
 	@printf "%b compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
 $(LIBFT):
-	$(MAKE) -C $(LIBS_DIR)/libft
+	$(MAKE) -C $(LIBFT_DIR) libft.a
+	@echo "\n$(LIBFT) compiled.\n"
 
+$(MLX):
+	@if [ ! -d $(MLX_DIR) ]; then \
+		cd libs && git clone https://github.com/42paris/minilibx-linux.git; \
+	fi
+	@cd $(MLX_DIR) && ./configure
+	@echo "\n$(MLX) compiled.\n"
+	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
@@ -83,18 +96,20 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 clean:
 	@$(RM) $(OBJ)
 	@$(RM) -r $(OBJ_DIR)
-	@$(MAKE) -C $(LIBS_DIR)/libft clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(MLX_DIR) clean
 	@printf "$(INFO)All object files removed.$(COLOR_RESET)\n"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make -C $(LIBS_DIR)/libft fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(RM) $(MLX)
 	@printf "$(INFO)Executable removed.$(COLOR_RESET)\n"
 
 re: fclean all
 
 run: re $(NAME)
-	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET)\n\n"
+	@echo "Running $(VIOLET)./$(NAME) \"$(ARG)\"$(COLOR_RESET)\n\n"
 	@./$(NAME) $(ARG)
 
 norm:
@@ -102,9 +117,9 @@ norm:
 	"https://raw.githubusercontent.com/42school/norminette/master/pdf/en.norm.pdf"
 
 
-#################################### RULES FOR TESTING ####################################
-$(NAME_DB): $(OBJ_DB) $(LIBFT)
-	@$(CC) $(OBJ_DB) $(LDFLAGS) $(LDLIBS) -o $@
+################################## RULES FOR TESTING ##################################
+$(NAME_DB): $(LIBFT) $(MLX) $(OBJ_DB)
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ_DB) $(LIBFT_FLAGS) $(MLX_FLAGSS) -o $@
 	@printf "%b for debugging compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
 $(OBJ_DIR_DB)/%.o: $(SRC_DIR)/%.c $(HEADERS)
@@ -119,7 +134,8 @@ $(TEST_DIR):
 print: re $(NAME) $(TEST_DIR)
 	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET)\n\n"
 	@./$(NAME) $(ARG) > $(TEST_DIR)/$(SIM_LOG).txt
-	@printf "See simulation logs in $(PATH_COLOR)$(TEST_DIR)/$(SIM_LOG).txt$(COLOR_RESET).\n"
+	@printf "See simulation logs in \
+	$(PATH_COLOR)$(TEST_DIR)/$(SIM_LOG).txt$(COLOR_RESET).\n"
 
 stderr: re $(NAME) $(TEST_DIR)
 	@printf "Running $(VIOLET)./$(NAME) $(ARG)$(COLOR_RESET) to check for errors.\n\n"
@@ -132,13 +148,13 @@ db:
 
 valg: $(NAME_DB) $(TEST_DIR)
 	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s \
-	--log-file=$(TEST_DIR)/$(VALG_LOG).log ./$(NAME_DB) $(ARG)
+	--track-origins=yes --log-file=$(TEST_DIR)/$(VALG_LOG).log ./$(NAME_DB) $(ARG)
 	@printf "\nValgrind run concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(VALG_LOG).log$(COLOR_RESET).\n"
 
 hel: $(NAME_DB) $(TEST_DIR)
-	@valgrind --tool=helgrind --track-destroy=all -s --log-file=$(TEST_DIR)/$(HELG_LOG).log \
-	./$(NAME_DB) $(ARG)
+	@valgrind --tool=helgrind --track-destroy=all -s \
+	--log-file=$(TEST_DIR)/$(HELG_LOG).log ./$(NAME_DB) $(ARG)
 	@printf "\nHelgrind run concluded. \
 	See output in $(PATH_COLOR)$(TEST_DIR)/$(HELG_LOG).log$(COLOR_RESET).\n"
 
