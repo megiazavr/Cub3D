@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/12 00:16:24 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/12 00:33:17 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,6 @@ PATH_COLOR      := $(ESC)[38;2;221;160;221m
 
 
 all: $(NAME)
-	@echo "$(NAME) is ready to run.\n"
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $@
@@ -97,13 +96,15 @@ clean:
 	@$(RM) $(OBJ)
 	@$(RM) -r $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@$(MAKE) -C $(MLX_DIR) clean
+	@if [ ! -d $(MLX_DIR) ]; then \
+		$(MAKE) -C $(MLX_DIR) clean;
+	fi
 	@printf "$(INFO)All object files removed.$(COLOR_RESET)\n"
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(RM) $(MLX)
+	$(RM) $(MLX)
 	@printf "$(INFO)Executable removed.$(COLOR_RESET)\n"
 
 re: fclean all
@@ -119,7 +120,7 @@ norm:
 
 ################################## RULES FOR TESTING ##################################
 $(NAME_DB): $(LIBFT) $(MLX) $(OBJ_DB)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ_DB) $(LIBFT_FLAGS) $(MLX_FLAGSS) -o $@
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ_DB) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $@
 	@printf "%b for debugging compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
 $(OBJ_DIR_DB)/%.o: $(SRC_DIR)/%.c $(HEADERS)
