@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/12 00:07:55 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/12 00:16:24 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
 HEADERS 	= $(addprefix include/, cub3D.h cub3D_err.h)
 
-LIBS_DIR	= /libs
+LIBS_DIR	= ./libs
 LIBFT_DIR	= $(LIBS_DIR)/libft
 LIBFT		= $(LIBS_DIR)/libft/libft.a
 MLX_DIR		= $(LIBS_DIR)/minilibx-linux
@@ -74,7 +74,7 @@ all: $(NAME)
 	@echo "$(NAME) is ready to run.\n"
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(MLX_FLAGSS) -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $@
 	@printf "%b compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
 $(LIBFT):
@@ -83,7 +83,7 @@ $(LIBFT):
 
 $(MLX):
 	@if [ ! -d $(MLX_DIR) ]; then \
-		cd libs && git clone https://github.com/42paris/minilibx-linux.git; \
+		cd $(LIBS_DIR) && git clone https://github.com/42paris/minilibx-linux.git; \
 	fi
 	@cd $(MLX_DIR) && ./configure
 	@echo "\n$(MLX) compiled.\n"
