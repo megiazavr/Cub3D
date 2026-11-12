@@ -6,11 +6,11 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 23:16:53 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/11 23:17:14 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/12 00:43:00 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include ""
+#include "../include/cub3D.h"
 
 static void	calc_screen_xy_pxls(t_map *map, t_win *win)
 {

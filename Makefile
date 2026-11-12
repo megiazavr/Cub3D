@@ -6,7 +6,7 @@
 #    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/12 00:39:53 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/12 00:55:59 by ncruz-ne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
 				parsing_helper.c color.c read_map.c)
-SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c) $(PARSING_SRC)
+SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c win_init.c) $(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
@@ -34,8 +34,6 @@ MLX			= $(MLX_DIR)/libmlx_Linux.a
 CC			= cc
 CPPFLAGS	= -Iinclude -I$(LIBFT_DIR) -I$(MLX_DIR) -O3
 CFLAGS		= -Wall -Wextra -Werror
-# LDFLAGS		= -L$(LIBS_DIR)/libft
-# LDLIBS		= -lft
 LIBFT_FLAGS	= -L$(LIBFT_DIR) -lft
 MLX_FLAGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 DB_FLAGS	= -g

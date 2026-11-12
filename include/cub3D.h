@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/11 23:36:32 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/12 00:50:59 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_map
 	int				next_identifier;
 }	t_map;
 
+/* Window structures */
 typedef struct s_img
 {
 	void	*img_ptr;
@@ -106,6 +107,35 @@ typedef struct s_img
 	int		line_len;
 	int		endian;
 }	t_img;
+
+typedef struct s_point
+{
+	long	x;
+	long	y;
+	long	z;
+	double	c_x;
+	double	c_y;
+	double	iso_x;
+	double	iso_y;
+	long	screen_x;
+	long	screen_y;
+	int		colour;
+}	t_point;
+
+typedef struct s_win
+{
+	double	min_x;
+	double	max_x;
+	double	min_y;
+	double	max_y;
+	double	map_w;
+	double	map_h;
+	double	scale_x;
+	double	scale_y;
+	double	scale;
+	double	offset_x;
+	double	offset_y;
+}	t_win;
 
 t_monitor	monitor(t_map *map);
 
@@ -116,6 +146,8 @@ void		parse_map_config(t_map *map);
 void		valid_color(t_map *map, t_map_ids id);
 int			read_map(t_map *map, char *l);
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
+
+void		win_init(t_map *map, t_win *win);
 
 // DELETE TESTER:
 void		rgb_print(t_map *map, t_map_ids id);

@@ -6,12 +6,12 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/12 00:32:50 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/12 00:55:10 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h" 
-#include <stdbool.h>
+#include "../../include/cub3D.h"
+
 static t_id_res	config_done(t_map *map)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/04 20:07:28 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/12 00:45:02 by ncruz-ne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,36 @@ typedef struct s_map
 	int		one_player_per_map;
 	char	player;
 }	t_map;
+
+/* Window structures */
+typedef struct s_point
+{
+	long	x;
+	long	y;
+	long	z;
+	double	c_x;
+	double	c_y;
+	double	iso_x;
+	double	iso_y;
+	long	screen_x;
+	long	screen_y;
+	int		colour;
+}	t_point;
+
+typedef struct s_win
+{
+	double	min_x;
+	double	max_x;
+	double	min_y;
+	double	max_y;
+	double	map_w;
+	double	map_h;
+	double	scale_x;
+	double	scale_y;
+	double	scale;
+	double	offset_x;
+	double	offset_y;
+}	t_win;
 
 t_monitor	monitor(t_map *map);
 
