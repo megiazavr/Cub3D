@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/09 19:45:05 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/12 15:46:06 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	valid_texture_path(t_map *map, t_map_ids id)
 {
-	if ((int)id != map->next_identifier)
-		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
-	map->next_identifier++;
+	// if ((int)id != map->next_identifier)
+	// 	exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
+	// map->next_identifier++;
 	if (map->identifier[1] && map->n_s_w_e_paths[id] == NULL)
 	{
 		map->n_s_w_e_paths[id] = ft_strtrim(map->identifier[1], " \t");
@@ -27,28 +27,6 @@ static void	valid_texture_path(t_map *map, t_map_ids id)
 		exit_cleanup(map, ERR_TEXTURE, ERR_DUPE_PATH_MSG);
 	return ;
 }
-
-// static void valid_identifier(t_map *map)
-// { 
-// 	if (map->identifier[0] && map->identifier[1]) // ?
-// 	{
-// 		if (ft_strcmp(map->identifier[0], "NO") == 0)
-// 			valid_texture_path(map, NO);
-// 		else if (ft_strcmp(map->identifier[0], "SO") == 0)
-// 			valid_texture_path(map, SO);
-// 		else if (ft_strcmp(map->identifier[0], "EA") == 0)
-// 			valid_texture_path(map, EA);
-// 		else if (ft_strcmp(map->identifier[0], "WE") == 0)
-// 			valid_texture_path(map, WE);
-// 		else if (ft_strcmp(map->identifier[0], "C") == 0)
-// 			valid_color(map, C);
-// 		else if (ft_strcmp(map->identifier[0], "F") == 0)
-// 			valid_color(map, F);
-// 		else
-// 			exit_cleanup(map, ERR_TEXTURE, ERR_MISSING_ID);
-// 	}
-// 	return ;
-// }
 
 static void	valid_identifier(t_map *map, char *trmd_line)
 {

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/09 20:00:30 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/16 18:07:33 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h" 
+#include "../../include/cub3D.h"
 #include <stdbool.h>
+
 static t_id_res	config_done(t_map *map)
 {
 	int	i;
@@ -41,78 +42,55 @@ static t_id_res	config_done(t_map *map)
 	return (DONE);
 }
 
-// static t_id_res	identifiers_done(t_map *map)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		if (map->n_s_e_w_paths[i] == NULL)
-// 			break ;
-// 		i++;
-// 	}
-// 	if (i > 4) // TODO: Can it reach here? 
-// 		return (ERROR);
-// 	else if (i < 4)
-// 		return (PENDING);
-// 	if (map->rgb_c_f[C - 4] == -1 || map->rgb_c_f[F - 4] == -1)
-// 		return (PENDING);
-// 	return (DONE);
-// }
-
-// static t_id_res	identifiers_done(t_map *map)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		if (map->n_s_e_w_paths[i] == NULL)
-// 			break ;
-// 		i++;
-// 	}
-// 	if (i > 4)
-// 		return (ERROR);
-// 	else if (i < 4)
-// 		return (PENDING);
-// 	i = 0;
-// 	while (i < 6)
-// 	{
-// 		if (map->rgb_c_f[i] == -1)
-// 			break ;
-// 		i++;
-// 	}
-// 	if (i > 6)
-// 		return (ERROR);
-// 	else if (i < 6)
-// 		return (PENDING);
-// 	return (DONE);
-// }
-
-static void	count_map_rows(t_map *map)
+void	count_map_rows(t_map *map)
 {
-	t_id_res	res;
+	int	curr_row;
 
+	curr_row = 0;
+	reopen(map);
 	map->read_line = get_next_line(map->file_fd);
+	while (map->read_line != NULL && curr_row < map->rows_until_map - 1)
+	{
+		free_str(&map->read_line);
+		map->read_line = get_next_line(map->file_fd);
+		curr_row++;
+	}
 	while (map->read_line != NULL)
 	{
-		if (empty_flag(map->read_line) == true)
-		{
-			free_str(&map->read_line);
-			map->read_line = get_next_line(map->file_fd);
-			continue ;
-		}
-		res = config_done(map);
-		if (res == PENDING)
-			parse_map_config(map);
-		else if (res == ERROR)
-			exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
-		else if (res == DONE)
+		if (empty_flag(map->read_line) == false)
 			map->rows++;
 		free_str(&map->read_line);
 		map->read_line = get_next_line(map->file_fd);
 	}
+}
+
+void	count_map_columns(t_map *map)
+{
+	int	curr_row;
+	int	len;
+
+	curr_row = 0;
+	reopen(map);
+	map->read_line = get_next_line(map->file_fd);
+	while (map->read_line != NULL && curr_row < map->rows_until_map - 1)
+	{
+		free_str(&map->read_line);
+		map->read_line = get_next_line(map->file_fd);
+		curr_row++;
+	}
+	while (map->read_line != NULL)
+	{
+		if (empty_flag(map->read_line) == false)
+		{
+			len = ft_strlen(map->read_line);
+			if (len > map->columns)
+				map->columns = len;
+		}
+		free_str(&map->read_line);
+		map->read_line = get_next_line(map->file_fd);
+		printf("lenght of the column line is %d\n\n\n", len);
+	}
+	return ;
 }
 
 // static void	parse_map(t_map *map, int in_map)
@@ -144,51 +122,25 @@ static void	count_map_rows(t_map *map)
 // 	return ;
 // }
 
-static void	parse_map(t_map *map, int in_map)
+void	parse_map(t_map *map, int i)
 {
-	int	i;
-	int	curr_file_row;
-
-	i = 0;
-	curr_file_row = 0;
-	map->matrix = malloc(sizeof(char *) * map->rows);
-	if (!map->matrix)
-		exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
-	map->file_fd = open(map->file, O_RDONLY);
-	if (map->file_fd < 0)
-		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
+	matrix(map);
 	while (map->read_line != NULL)
 	{
-		while (curr_file_row < map->rows_until_map)
-		{
-			map->read_line = get_next_line(map->file_fd);
-		}
-		// if (empty_flag(map->read_line) == true)
-		// {
-		// 	free_str(&map->read_line);
-		// 	map->read_line = get_next_line(map->file_fd);
-		// 	continue ;
-		// }
-		if (in_map == 1)
-		{
-			map->one_player_per_map = read_map(map, map->read_line);
-			map->matrix[i++] = map->read_line;
-			map->rows++;
-			map->read_line = get_next_line(map->file_fd);
-			continue ;
-		}
-		else
-		{
-			in_map = 1;
-			map->one_player_per_map = read_map(map, map->read_line);
-			map->matrix[i++] = map->read_line;
-			map->read_line = get_next_line(map->file_fd);
-		}
+		map->one_player_per_map = read_map(map, map->read_line);
+		map->matrix[i] = column_line(map);
+		if (!map->matrix[i])
+			exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
+		free_str(&map->read_line);
+		i++;
+		map->read_line = get_next_line(map->file_fd);
+		if (map->read_line != NULL)
+			empty_flag(map->read_line);
 	}
 	return ;
 }
 
-static void	monitor_loop(t_map *map, int in_map)
+static void	monitor_loop(t_map *map)
 {
 	t_id_res	res;
 	bool		first_open;
@@ -207,45 +159,11 @@ static void	monitor_loop(t_map *map, int in_map)
 			continue ;
 		}
 		res = config_done(map);
-		if (res == PENDING)
-			parse_map_config(map);
-		else if (res == ERROR) // TODO: do we reach here? 
-			exit_cleanup(map, ERR_TEXTURE, ERR_IDENTIFIER_MSG);
-		else if (res == DONE)
-		{
-			if (res == DONE && first_open == true)
-			{
-				count_map_rows(map);
-				close(map->file_fd);
-				first_open = false;
-			}
-			if (res == DONE && first_open == false)
-				parse_map(map, in_map);
-		}
-		// {
-		// 	if (in_map == 1)
-		// 	{
-		// 		map->one_player_per_map = read_map(map, map->read_line);
-		// 		free_str(&map->read_line);
-		// 		map->read_line = get_next_line(map->file_fd);
-		// 		continue ;
-		// 	}
-		// 	else
-		// 	{
-		// 		in_map = 1;
-		// 		map->one_player_per_map = read_map(map, map->read_line);
-		// 		// free_str(&map->read_line);
-		// 	}
-		// }
-		free_str(&map->read_line);
-		map->read_line = get_next_line(map->file_fd);
-		if (res != DONE)
-			map->rows_until_map++;
+		results(map, res, &first_open);
 	}
 	free_str(&map->read_line);
 	return ;
 }
-
 
 // t_monitor	monitor(t_map *map)
 // {
@@ -262,44 +180,22 @@ static void	monitor_loop(t_map *map, int in_map)
 // 	return (MAP);
 // }
 
-//TODO: this function isn't doing much, it's always returning map. We need to check inside the main if there is a map in the end and if not - return an error?
-// t_monitor	monitor(t_map *map)
-// {
-// 	int	i;
-
-// 	map->file_fd = open(map->file, O_RDONLY);
-// 	if (map->file_fd < 0)
-// 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-// 	count_map_rows(map);
-// 	close(map->file_fd);
-// 	i = 0;
-// 	while (i < 4)
-// 		free_str(&map->n_s_w_e_paths[i++]);
-// 	map->rgb_f_c[0] = -1;
-// 	map->rgb_f_c[1] = -1;
-// 	map->next_identifier = 0;
-// 	map->matrix = malloc(sizeof(char *) * map->rows);
-// 	if (!map->matrix)
-// 		exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
-// 	map->file_fd = open(map->file, O_RDONLY);
-// 	if (map->file_fd < 0)
-// 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-// 	rgb_print(map, 0);
-// 	monitor_loop(map, 0);
-// 	// if (map->one_player_per_map == 0)
-// 	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
-// 	return (MAP);
-// }
-
 t_monitor	monitor(t_map *map)
 {
-	int	in_map;
-
-	map->file_fd = open(map->file, O_RDONLY);
-	if (map->file_fd < 0)
-		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
-	rgb_print(map, 0);
-	monitor_loop(map, in_map);
+	reopen(map);
+	// map->file_fd = open(map->file, O_RDONLY);
+	// if (map->file_fd < 0)
+	// 	exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
+	//rgb_print(map, 0);
+	printf("here before monitor_loop\n\n");
+	monitor_loop(map);
+	printf("here after monitor_loop\n\n");
+	if (map->rows == 0)
+		exit_cleanup(map, ERR_MAP, ERR_MAP_IS_EMPTY);
+	printf("here after map_rows counter\n\n");
+	if (map->one_player_per_map != 1)
+		exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
+	printf("here after one player per map checker\n\n");
 	// if (map->one_player_per_map == 0)
 	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
 	return (MAP);

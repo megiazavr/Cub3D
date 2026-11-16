@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+         #
+#    By: megi <megi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/02 19:37:50 by ncruz-ne          #+#    #+#              #
-#    Updated: 2026/11/08 19:59:20 by ncruz-ne         ###   ########.fr        #
+#    Updated: 2026/11/16 16:38:06 by megi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ_DIR 	= obj
 OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
-				parsing_helper.c color.c read_map.c)
+				parsing_helper.c color.c matrix.c)
 SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c) $(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))

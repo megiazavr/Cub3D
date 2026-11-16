@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 18:04:50 by megi              #+#    #+#             */
-/*   Updated: 2026/11/09 18:31:57 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/16 15:16:40 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,12 @@ int	main(int ac, char **av)
 	len = ft_strlen(map.file);
 	if (len < 4 || ft_strcmp(map.file + len - 4, ".cub") != 0)
 		exit_cleanup(&map, ERR_ARGS, ERR_ARGS_FILE_MSG);
+	printf("here1\n\n");
 	monitor(&map);
-	// if (map->rows == 0)
-	// 	exit_cleanup(map, ERR_MAP, //TOFDO: add the err message if there is no map 
+	printf("here100000\n\n");
+	if (!&monitor)
+		exit_cleanup(&map, ERR_MAP,  ERR_MAP_IS_EMPTY);
+	printf("here");
+	 //TOFDO: add the err message if there is no map 
 	exit_cleanup(&map, VALID, NULL);
 }

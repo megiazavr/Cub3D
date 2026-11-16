@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 15:38:25 by ncruz-ne          #+#    #+#             */
-/*   Updated: 2026/11/09 16:47:51 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/12 17:17:31 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	parse_rgb(t_map *map, char **rgb, t_map_ids c_or_f)
 	if (map->rgb_f_c[c_or_f - 4] != -1)
 		exit_cleanup(map, ERR_TEXTURE, ERR_RGB_AV_MSG);
 	map->rgb_f_c[c_or_f - 4] = (r << 16) | (g << 8) | b;
-	rgb_print(map, c_or_f);
+	//rgb_print(map, c_or_f);
 	return ;
 }
 
@@ -64,9 +64,9 @@ void	valid_color(t_map *map, t_map_ids id)
 	char	*rgb_str;
 	char	**rgb;
 
-	if ((int)id != map->next_identifier)
-		exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
-	map->next_identifier++;
+	// if ((int)id != map->next_identifier)
+	// 	exit_cleanup(map, ERR_TEXTURE, ERR_ORDER_MSG);
+	// map->next_identifier++;
 	rgb_str = ft_strtrim(map->identifier[1], " \t");
 	rgb = ft_split(rgb_str, ',');
 	free_str(&rgb_str);
@@ -79,43 +79,43 @@ void	valid_color(t_map *map, t_map_ids id)
 	return ;
 }
 
-// TODO: delete tester
-void	rgb_print(t_map *map, t_map_ids id)
-{
-	int		i;
-	char	c;
+// // TODO: delete tester
+// void	rgb_print(t_map *map, t_map_ids id)
+// {
+// 	int		i;
+// 	char	c;
 
-	c = 0;
-	if (id == C || id == F)
-	{
-		if (id == C)
-			c = 'C';
-		else if (id == F)
-			c = 'F';
-		ft_printf(">> Results after parse_rgb() for identifier %c:\n", c);
-	}
-	i = 0;
-	while (i < 2)
-	{
-		// if (i % 2 == 0)
-		// 	ft_putstr_fd("Floor color: ", STDOUT_FILENO);
-		// else
-		// 	ft_putstr_fd("Ceiling color: ", STDOUT_FILENO);
-		// if (i < 2)
-		// 	ft_putstr_fd("Red: ", STDOUT_FILENO);
-		// else if (i > 1 && i < 4)
-		// 	ft_putstr_fd("Green: ", STDOUT_FILENO);
-		// else if (i > 3 && i < 6)
-		// 	ft_putstr_fd("Blue: ", STDOUT_FILENO);
-		// print_bits(map->rgb_c_f[i] + '0');
-		// ft_putchar_fd('\n', STDOUT_FILENO);
-		if (i == F - 4)
-			c = 'F';
-		else if (i == C - 4)
-			c = 'C';
-		printf("array index is %d for ID %c, color is %d)\n",
-			i, c, map->rgb_f_c[i]);
-		i++;
-	}
-	printf("\n");
-}
+// 	c = 0;
+// 	if (id == C || id == F)
+// 	{
+// 		if (id == C)
+// 			c = 'C';
+// 		else if (id == F)
+// 			c = 'F';
+// 		ft_printf(">> Results after parse_rgb() for identifier %c:\n", c);
+// 	}
+// 	i = 0;
+// 	while (i < 2)
+// 	{
+// 		// if (i % 2 == 0)
+// 		// 	ft_putstr_fd("Floor color: ", STDOUT_FILENO);
+// 		// else
+// 		// 	ft_putstr_fd("Ceiling color: ", STDOUT_FILENO);
+// 		// if (i < 2)
+// 		// 	ft_putstr_fd("Red: ", STDOUT_FILENO);
+// 		// else if (i > 1 && i < 4)
+// 		// 	ft_putstr_fd("Green: ", STDOUT_FILENO);
+// 		// else if (i > 3 && i < 6)
+// 		// 	ft_putstr_fd("Blue: ", STDOUT_FILENO);
+// 		// print_bits(map->rgb_c_f[i] + '0');
+// 		// ft_putchar_fd('\n', STDOUT_FILENO);
+// 		if (i == F - 4)
+// 			c = 'F';
+// 		else if (i == C - 4)
+// 			c = 'C';
+// 		printf("array index is %d for ID %c, color is %d)\n",
+// 			i, c, map->rgb_f_c[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// }

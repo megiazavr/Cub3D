@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncruz-ne <ncruz-ne@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:47:08 by megi              #+#    #+#             */
-/*   Updated: 2026/11/09 20:00:47 by ncruz-ne         ###   ########.fr       */
+/*   Updated: 2026/11/16 18:05:34 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ typedef enum e_map_ids
 	C
 }	t_map_ids;
 
-// typedef enum e_id_res
-// {
-// 	TEXTURE,
-// 	COLOR,
-// 	ERROR
-// }	t_id_res;
-
 typedef enum e_id_res
 {
 	DONE,
@@ -56,23 +49,13 @@ typedef enum e_id_res
 	COLOR
 }	t_id_res;
 
-// typedef struct s_line_node
-// {
-// 	char				*line;
-// 	struct s_line_node	*next;
-// }	t_line_node;
-
-// typedef struct s_lines
-// {
-// 	t_line_node	*head;
-// 	t_line_node	*tail;
-// }	t_lines;
-
 typedef struct s_map
 {
 	char 			**matrix;
 	int				rows_until_map;
 	int				rows;
+	char 			*column_line;
+	int				columns;
 	int				column_x;
 	int				row_y;
 	char			player_dir;
@@ -84,22 +67,30 @@ typedef struct s_map
 	char			*file;
 	int				file_fd;
 	int				space;
-	//t_lines			lines;
 	char			*read_line;
 	int				next_identifier;
 }	t_map;
 
+
+// Parsing
 t_monitor	monitor(t_map *map);
 
-void		free_arr(char ***arr);
-bool		empty_flag(char *l);
-void		free_str(char **str);
+void 		matrix(t_map *map);
 void		parse_map_config(t_map *map);
 void		valid_color(t_map *map, t_map_ids id);
 int			read_map(t_map *map, char *l);
+void		results(t_map *map, t_id_res res, bool *first_open);
+void		parse_map(t_map *map, int i);
+void		count_map_rows(t_map *map);
+void		count_map_columns(t_map *map);
+void		reopen(t_map *map);
+char		*column_line(t_map *map);
+bool		empty_flag(char *l);
+void		free_str(char **str);
+void		free_arr(char ***arr);
 void		exit_cleanup(t_map *map, t_err_type err, char *err_msg);
 
 // DELETE TESTER:
-void		rgb_print(t_map *map, t_map_ids id);
+// void		rgb_print(t_map *map, t_map_ids id);
 
 #endif
