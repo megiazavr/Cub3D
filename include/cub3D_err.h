@@ -52,6 +52,7 @@ player faces"
 # define ERR_MAP_NOT_CLOSED_MSG	"The map must be closed/surrounded by walls"
 # define ERR_MAP_IS_EMPTY "The map is empty. Add '1' for walls, '0' for spaces \
 and one of: N, S, W, E for the player direction."
+# define ERR_MAP_TOO_BIG_MSG	"Map is too large (max 200 rows / 200 columns)"
 
 /* Errors messages with perror() */
 # define ERR_OPEN_MSG		"Opening .cub file failed"

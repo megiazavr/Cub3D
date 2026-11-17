@@ -44,6 +44,8 @@ void	results(t_map *map, t_id_res res, bool *first_open)
 			free_str(&map->read_line);
 			count_map_rows(map);
 			count_map_columns(map);
+			if (map->rows > 200 || map->columns > 200)
+				exit_cleanup(map, ERR_MAP, ERR_MAP_TOO_BIG_MSG);
 			close(map->file_fd);
 			*first_open = false;
 		}
