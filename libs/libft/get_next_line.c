@@ -12,26 +12,33 @@
 
 #include "libft.h"
 
+static char	g_gnl_buf[FOPEN_MAX][BUFFER_SIZE + 1];
+
+void	gnl_reset(int fd)
+{
+	if (fd >= 0 && fd < FOPEN_MAX)
+		g_gnl_buf[fd][0] = '\0';
+}
+
 char	*get_next_line(int fd)
 {
-	static char	buf[FOPEN_MAX][BUFFER_SIZE + 1];
 	char		*line;
 	ssize_t		bytesread;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= FOPEN_MAX)
 		return (NULL);
 	line = NULL;
-	if (!buf[fd][0])
+	if (!g_gnl_buf[fd][0])
 	{
-		bytesread = read(fd, buf[fd], BUFFER_SIZE);
+		bytesread = read(fd, g_gnl_buf[fd], BUFFER_SIZE);
 		if (bytesread <= 0)
 		{
-			buf[fd][0] = '\0';
+			g_gnl_buf[fd][0] = '\0';
 			return (NULL);
 		}
-		buf[fd][bytesread] = '\0';
+		g_gnl_buf[fd][bytesread] = '\0';
 	}
-	line = read_until_nl(fd, buf[fd], line);
+	line = read_until_nl(fd, g_gnl_buf[fd], line);
 	if (!line)
 		return (NULL);
 	return (line);

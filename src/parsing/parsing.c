@@ -6,12 +6,11 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 16:46:10 by megi              #+#    #+#             */
-/*   Updated: 2026/11/16 18:07:33 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/17 17:50:38 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
-#include <stdbool.h>
 
 static t_id_res	config_done(t_map *map)
 {
@@ -127,7 +126,7 @@ void	parse_map(t_map *map, int i)
 	matrix(map);
 	while (map->read_line != NULL)
 	{
-		map->one_player_per_map = read_map(map, map->read_line);
+		map->one_player_per_map = read_map(map, i, 0);
 		map->matrix[i] = column_line(map);
 		if (!map->matrix[i])
 			exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
@@ -196,7 +195,11 @@ t_monitor	monitor(t_map *map)
 	if (map->one_player_per_map != 1)
 		exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
 	printf("here after one player per map checker\n\n");
-	// if (map->one_player_per_map == 0)
-	// 	exit_cleanup(map, ERR_MAP, ERR_PLAYER_MSG);
+	map->matrix[map->row_y][map->column_x] = '0';
+	printf("=== до flood_fill ===\n");
+	print_matrix(map);
+	flood_fill(map, map->row_y, map->column_x);
+	printf("=== после flood_fill ===\n");
+	print_matrix(map);
 	return (MAP);
 }

@@ -124,5 +124,6 @@ int		ft_nlen(long long n);
 /* get_next_line() */
 char	*get_next_line(int fd);
 char	*read_until_nl(int fd, char *buf, char *line);
+void	gnl_reset(int fd);
 
 #endif

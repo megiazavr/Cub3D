@@ -48,9 +48,5 @@ int	main(int ac, char **av)
 	printf("here1\n\n");
 	monitor(&map);
 	printf("here100000\n\n");
-	if (!&monitor)
-		exit_cleanup(&map, ERR_MAP,  ERR_MAP_IS_EMPTY);
-	printf("here");
-	 //TOFDO: add the err message if there is no map 
 	exit_cleanup(&map, VALID, NULL);
 }

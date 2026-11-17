@@ -6,7 +6,7 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:27 by megi              #+#    #+#             */
-/*   Updated: 2026/11/16 17:56:27 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/17 17:59:54 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	results(t_map *map, t_id_res res, bool *first_open)
 	{
 		if (*first_open == true)
 		{
+			free_str(&map->read_line);
 			count_map_rows(map);
 			count_map_columns(map);
 			close(map->file_fd);
@@ -62,6 +63,7 @@ void	reopen(t_map *map)
 	map->file_fd = open(map->file, O_RDONLY);
 	if (map->file_fd < 0)
 		exit_cleanup(map, ERR_PERR, ERR_OPEN_MSG);
+	gnl_reset(map->file_fd);
 }
 
 char	*column_line(t_map *map)
@@ -86,24 +88,13 @@ char	*column_line(t_map *map)
 	return (map->column_line);
 }
 
-//TODO: should we actually do
-void matrix(t_map *map)
+bool	space(t_map *map, char c)
 {
-	int curr_row;
-
-	curr_row = 0;
-	map->matrix = malloc(sizeof(char *) * map->rows);
-	if (!map->matrix)
-		exit_cleanup(map, ERR_PERR, ERR_MEM_MATRIX_MSG);
-	reopen(map);
-	map->read_line = get_next_line(map->file_fd);
-	while (map->read_line != NULL && curr_row < map->rows_until_map - 1)
-	{
-		free_str(&map->read_line);
-		map->read_line = get_next_line(map->file_fd);
-		curr_row++;
-	}
-	if (map->read_line != NULL)
-		empty_flag(map->read_line);
-	return ;
+	(void)map;
+	if (c == '0' || c == '1')
+		return (true);
+	if (c == ' ' || c == '\t')
+		return (true);
+	return (false);
 }
+

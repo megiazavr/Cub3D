@@ -6,11 +6,11 @@
 /*   By: megi <megi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/24 14:40:59 by megi              #+#    #+#             */
-/*   Updated: 2026/11/12 15:46:06 by megi             ###   ########.fr       */
+/*   Updated: 2026/11/17 17:21:15 by megi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h" // bring in t_map, t_map_ids, prototypes, error enums
+#include "../../include/cub3D.h"
 
 static void	valid_texture_path(t_map *map, t_map_ids id)
 {
