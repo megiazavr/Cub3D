@@ -60,8 +60,10 @@ void	flood_fill(t_map *map, int y, int x)
 {
 	if (y < 0 || y >= map->rows || x < 0 || x >= map->columns)
 		exit_cleanup(map, ERR_MAP, ERR_MAP_NOT_CLOSED_MSG);
-	if (map->matrix[y][x] == '1')
+	if (map->matrix[y][x] == '1' || map->matrix[y][x] == 'v')
 		return ;
+	if (map->matrix[y][x] != '0')
+		exit_cleanup(map, ERR_MAP, ERR_MAP_NOT_CLOSED_MSG);
 	while (x < map->columns && map->matrix[y][x] == '0')
 	{
 		map->matrix[y][x] = 'v';
@@ -70,7 +72,8 @@ void	flood_fill(t_map *map, int y, int x)
 		flood_fill(map, y, x - 1);
 		x++;
 	}
-	if (x >= map->columns)
+	if (x >= map->columns
+		|| (map->matrix[y][x] != '1' && map->matrix[y][x] != 'v'))
 		exit_cleanup(map, ERR_MAP, ERR_MAP_NOT_CLOSED_MSG);
 }
 

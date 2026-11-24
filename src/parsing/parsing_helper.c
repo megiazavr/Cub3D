@@ -79,13 +79,13 @@ char	*column_line(t_map *map)
 	while (map->read_line[i])
 	{
 		if (map->read_line[i] == ' ' || map->read_line[i] == '\t')
-			map->column_line[i] = '0';
+			map->column_line[i] = ' ';
 		else
 			map->column_line[i] = map->read_line[i];
 		i++;
 	}
 	while (i < map->columns)
-		map->column_line[i++] = '0';
+		map->column_line[i++] = ' ';
 	map->column_line[map->columns] = '\0';
 	return (map->column_line);
 }
