@@ -28,13 +28,26 @@ HEADERS 	= $(addprefix include/, cub3D.h cub3D_err.h)
 LIBS_DIR	= ./libs
 LIBFT		= $(LIBS_DIR)/libft/libft.a
 MLX_DIR		= $(LIBS_DIR)/minilibx-linux
-MLX			= $(MLX_DIR)/libmlx_Linux.a
+
+UNAME_S		:= $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin)
+MLX_LIB_NAME	= mlx
+X11_INC			= -I/opt/X11/include
+X11_LIB			= -L/opt/X11/lib
+else
+MLX_LIB_NAME	= mlx_Linux
+X11_INC			=
+X11_LIB			= -L/usr/lib
+endif
+
+MLX			= $(MLX_DIR)/lib$(MLX_LIB_NAME).a
 
 CC			= cc
-CPPFLAGS	= -Iinclude -I$(MLX_DIR)
+CPPFLAGS	= -Iinclude -I$(MLX_DIR) $(X11_INC)
 CFLAGS		= -Wall -Wextra -Werror
-LDFLAGS		= -L$(LIBS_DIR)/libft -L$(MLX_DIR) -L/usr/lib
-LDLIBS		= -lft -lmlx_Linux -lXext -lX11 -lm -lz
+LDFLAGS		= -L$(LIBS_DIR)/libft -L$(MLX_DIR) $(X11_LIB)
+LDLIBS		= -lft -l$(MLX_LIB_NAME) -lXext -lX11 -lm -lz
 DB_FLAGS	= -g
 
 RM 			= rm -f
