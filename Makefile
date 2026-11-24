@@ -19,7 +19,7 @@ OBJ_DIR_DB 	= obj_db
 
 PARSING_SRC	= $(addprefix $(SRC_DIR)/parsing/, parsing.c parsing_texture.c \
 				parsing_helper.c color.c matrix.c)
-SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c) $(PARSING_SRC)
+SRC			= $(addprefix $(SRC_DIR)/, main.c exit.c win_init.c) $(PARSING_SRC)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_DB 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR_DB)/%.o,$(SRC))
 
@@ -27,12 +27,14 @@ HEADERS 	= $(addprefix include/, cub3D.h cub3D_err.h)
 
 LIBS_DIR	= ./libs
 LIBFT		= $(LIBS_DIR)/libft/libft.a
+MLX_DIR		= $(LIBS_DIR)/minilibx-linux
+MLX			= $(MLX_DIR)/libmlx_Linux.a
 
 CC			= cc
-CPPFLAGS	= -Iinclude
+CPPFLAGS	= -Iinclude -I$(MLX_DIR)
 CFLAGS		= -Wall -Wextra -Werror
-LDFLAGS		= -L$(LIBS_DIR)/libft
-LDLIBS		= -lft
+LDFLAGS		= -L$(LIBS_DIR)/libft -L$(MLX_DIR) -L/usr/lib
+LDLIBS		= -lft -lmlx_Linux -lXext -lX11 -lm -lz
 DB_FLAGS	= -g
 
 RM 			= rm -f
@@ -67,12 +69,20 @@ PATH_COLOR      := $(ESC)[38;2;221;160;221m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) $(MLX)
 	$(CC) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $@
 	@printf "%b compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
 $(LIBFT):
 	$(MAKE) -C $(LIBS_DIR)/libft
+
+$(MLX):
+	@if [ ! -d $(MLX_DIR) ]; then \
+		cd $(LIBS_DIR) && git clone https://github.com/42paris/minilibx-linux.git; \
+	fi
+	@cd $(MLX_DIR) && ./configure
+	@$(MAKE) -C "$(MLX_DIR)"
+	@echo "\n$(MLX) compiled.\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
@@ -83,11 +93,13 @@ clean:
 	@$(RM) $(OBJ)
 	@$(RM) -r $(OBJ_DIR)
 	@$(MAKE) -C $(LIBS_DIR)/libft clean
+	@$(MAKE) -C $(MLX_DIR) clean
 	@printf "$(INFO)All object files removed.$(COLOR_RESET)\n"
 
 fclean: clean
 	@$(RM) $(NAME)
 	@make -C $(LIBS_DIR)/libft fclean
+	@$(RM) $(MLX)
 	@printf "$(INFO)Executable removed.$(COLOR_RESET)\n"
 
 re: fclean all
@@ -102,7 +114,7 @@ norm:
 
 
 ################################## RULES FOR TESTING ##################################
-$(NAME_DB): $(OBJ_DB) $(LIBFT)
+$(NAME_DB): $(OBJ_DB) $(LIBFT) $(MLX)
 	@$(CC) $(OBJ_DB) $(LDFLAGS) $(LDLIBS) -o $@
 	@printf "%b for debugging compiled.\n" "$(GREEN)$@$(COLOR_RESET)"
 
