@@ -23,6 +23,8 @@
 
 # define WIN_W 1280
 # define WIN_H 960
+# define TILE_W 64
+# define TILE_H 32
 
 typedef enum e_monitor
 {
@@ -60,6 +62,7 @@ typedef enum e_id_res
 typedef struct s_map
 {
 	char 			**matrix;
+	struct s_point	**iso_grid;
 	int				rows_until_map;
 	int				rows;
 	char 			*column_line;

@@ -61,6 +61,19 @@ static void	free_matrix(t_map *map)
 	map->matrix = NULL;
 }
 
+static void	free_iso_grid(t_map *map)
+{
+	int	i;
+
+	if (!map->iso_grid)
+		return ;
+	i = 0;
+	while (i < map->rows)
+		free(map->iso_grid[i++]);
+	free(map->iso_grid);
+	map->iso_grid = NULL;
+}
+
 static void	close_fds(t_map *map)
 {
 	int	i;
@@ -90,6 +103,7 @@ void	exit_cleanup(t_map *map, t_err_type err, char *err_msg)
 	while (i < 4)
 		free_str(&map->n_s_w_e_paths[i++]);
 	free_matrix(map);
+	free_iso_grid(map);
 	close_fds(map);
 	if (err != VALID)
 		exit(EXIT_FAILURE);
